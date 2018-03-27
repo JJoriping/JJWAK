@@ -1,0 +1,13 @@
+{
+  "name": "daldalso",
+  "description": "달과 달의 소리",
+  "main": "dist/Main.js",
+  "authors": [
+    "JJoriping"
+  ],
+  "license": "ISC",
+  "private": true,
+  "dependencies": {
+    "react": "^16.1.0"
+  }
+}

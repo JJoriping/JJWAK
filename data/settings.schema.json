@@ -1,0 +1,40 @@
+{
+  "title": "root",
+  "type": "object",
+  "required": [
+    "port",
+    "cookie-secret",
+    "language-support"
+  ],
+  "properties": {
+    "port": {
+      "type": "number"
+    },
+    "https": {
+      "type": "object",
+      "required": [
+        "key",
+        "cert"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The path of SSL private key file related to the project data directory."
+        },
+        "cert": {
+          "type": "string",
+          "description": "The path of SSL signed certificate file related to the project data directory."
+        }
+      }
+    },
+    "cookie-secret": {
+      "type": "string"
+    },
+    "language-support": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
