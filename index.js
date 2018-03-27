@@ -1,4 +1,4 @@
-const CopyDir = require("copy-dir");
+const NCP = require("ncp").ncp;
 const ReadLine = require("readline-sync");
 const JJLog = require("jj-log").default;
 const CWD = process.cwd();
@@ -9,13 +9,14 @@ function main(){
     // 이곳에서 키트를 고를 수 있도록 해야 한다.
     const KIT = "WA-TSX";
 
-    CopyDir(`./kits/${KIT}`, CWD, err => {
+    NCP(`${__dirname}/kits/${KIT}`, CWD, err => {
         if(err) return JJLog.error(err);
         JJLog.success(`The kit ${KIT} has been copied to ${CWD}!`);
+        
         JJLog.info("You can use these commands to install and build completely:");
-        JJLog.info("\t\t> npm install");
-        JJLog.info("\t\t> npm run build");
-        JJLog.info("\t\t> npm start");
+        JJLog.info("\t> npm install");
+        JJLog.info("\t> npm run build");
+        JJLog.info("\t> npm start");
     });
 }
 main();

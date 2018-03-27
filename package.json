@@ -12,13 +12,14 @@
     "type": "git",
     "url": "git+https://github.com/JJoriping/JJWAK.git"
   },
+  "bin": "./bin/jjwak",
   "bugs": {
     "url": "https://github.com/JJoriping/JJWAK/issues"
   },
   "homepage": "https://github.com/JJoriping/JJWAK#readme",
   "dependencies": {
-    "copy-dir": "^0.3.0",
     "jj-log": "bitbucket:jjo_kr/jj-log",
+    "ncp": "^2.0.0",
     "readline-sync": "^1.4.9"
   }
 }
