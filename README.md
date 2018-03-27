@@ -1,6 +1,6 @@
 # JJWAK
 Integrated Web Application Development Kit for Windows
-## Version 1.0.0
+## Version 1.0
 - Published on 180327
 - The first version :)
 
