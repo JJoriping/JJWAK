@@ -18,6 +18,7 @@ if(IS_FOR_PROC){
     JJLog.warn("Development mode doesn't support asterisk.");
   }
   FS.watch("./src/front", { recursive: true }, (c, file) => {
+    if(!file.match(/\.scss$/)) return;
     JJLog.info(`%F_CYAN%WATCH%NORMAL% SCSS ${PAGE} (by ${file})`);
     SASS.render(OPTIONS, onComplete);
   });
