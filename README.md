@@ -1,6 +1,6 @@
 # JJWAK
 Integrated Web Application Development Kit for Windows
-## Version 1.0.1
+## Version 1.1
 - Published on 180327
 - The first version :)
 
@@ -8,6 +8,9 @@ Integrated Web Application Development Kit for Windows
 - Node.js 8
 - Python 3
 ## Setup
+1. `npm install -g github:JJoriping/JJWAK`
+1. Locate the project you want to start.
+1. `jjwak`
 1. `npm install`
 1. `npm run build`
 1. `npm start`
@@ -19,6 +22,8 @@ Integrated Web Application Development Kit for Windows
   - The modules are in `./src/front`
   - `page`: the page to be watched. `*` indicates all pages.
   - `!`: build in production mode (no watching)
+## Kits available
+- Currently only WA-TSX is supported.
 ## Modules used
 - Babel
 - Bower
