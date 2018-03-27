@@ -15,4 +15,4 @@ export function getProjectData(path:string):Buffer{
     return null;
   }
 }
-export const SETTINGS:DDS.Settings = JSON.parse(getProjectData("settings.json").toString());
+export const SETTINGS:JJWAK.Settings = JSON.parse(getProjectData("settings.json").toString());

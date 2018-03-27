@@ -5,12 +5,6 @@ import Logger from "jj-log";
 
 import { getProjectData, SETTINGS } from "./System";
 
-interface ReactNestOptions extends Object{
-  page:string;
-  title:string;
-  locale:string;
-}
-
 const HTML_TEMPLATE = getProjectData("template.html").toString();
 const LANGUAGE_SUPPORT = SETTINGS['language-support'];
 let LANGUAGES:Table<string>;
@@ -78,7 +72,7 @@ export function PageBuilder(page:string):Express.RequestHandler{
  */
 export function Engine(
   path:string,
-  $:ReactNestOptions,
+  $:JJWAK.Page.Props,
   callback:(err:any, content?:string) => void
 ):void{
   const REACT_SUFFIX = process.env['NODE_ENV'] === "production"

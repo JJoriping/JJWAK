@@ -7,7 +7,7 @@ const JJLog = require("jj-log").default;
 const options = {};
 const cwd = process.cwd();
 
-JJLog.success("Welcome to JJWAK!");
+JJLog.success("*** JJWAK WA-TSX Setup ***");
 JJLog.log("Please introduce your application!");
 read("Name", cwd.slice(cwd.lastIndexOf("\\") + 1).toLowerCase().replace(/\W/g, "-"))
   .then(() => read("Version", "1.0.0"))
