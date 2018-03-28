@@ -5,7 +5,7 @@ import Header from "./@global/Header";
 import Footer from "./@global/Footer";
 
 export default function Bind(TargetClass:any):void{
-  const $root = document.createElement("article");
+  const $root = document.createElement("main");
 
   ReactDOM.render(<section id="stage">
     <Header />

@@ -8,9 +8,9 @@ export default class Index extends JJorm<JJWAK.Page.Props>{
   ACTION_RECEIVER_TABLE = {};
 
   render():React.ReactNode{
-    return <section>
+    return <article>
       Hello, {this.props.page} and {L.get("test")}!
-    </section>;
+    </article>;
   }
 }
 Bind(Index);
