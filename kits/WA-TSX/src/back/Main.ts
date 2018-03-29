@@ -30,10 +30,10 @@ App.get("/", ReactNest.PageBuilder("Index"));
 
 if(SPDY_OPTIONS){
   Spdy.createServer(SPDY_OPTIONS, App).listen(SETTINGS['port'], () => {
-    Logger.success("HTTPS Server");
+    Logger.success("HTTPS Server", SETTINGS['port']);
   });
 }else{
   App.listen(SETTINGS['port'], () => {
-    Logger.success("HTTP Server");
+    Logger.success("HTTP Server", SETTINGS['port']);
   });
 }
