@@ -19,6 +19,7 @@ App.set('view engine', "js");
 
 App.use(CookieParser(SETTINGS['cookie-secret']));
 App.use("/libs", Express.static(Path.resolve(__dirname, "./libs")));
+App.use("/media", Express.static(Path.resolve(__dirname, "./media")));
 App.use("/pages", Express.static(Path.resolve(__dirname, "./pages")));
 
 App.get("/gwalli/load-languages", (req, res) => {
