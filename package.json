@@ -19,6 +19,7 @@
   "homepage": "https://github.com/JJoriping/JJWAK#readme",
   "dependencies": {
     "jj-log": "bitbucket:jjo_kr/jj-log",
+    "md5-file": "^3.2.3",
     "ncp": "^2.0.0",
     "readline-sync": "^1.4.9"
   }
