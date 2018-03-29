@@ -31,13 +31,13 @@ def start_scss(options):
   if options['is_for_production']:
     # SCSS for production
     return subprocess.Popen([
-      "node", "./data/front-scss-loader",
+      "node", "./tools/front-scss-loader",
       options['page'], "!"
     ], shell=True)
   else:
     # SCSS for development
     return subprocess.Popen([
-      "node", "./data/front-scss-loader",
+      "node", "./tools/front-scss-loader",
       options['page']
     ], shell=True)
 
@@ -46,7 +46,7 @@ def start_lang(options):
     return None
   else:
     return subprocess.Popen([
-      "node", "./data/front-lang-loader"
+      "node", "./tools/front-lang-loader"
     ], shell=True)
 
 def terminate_one(pid):
