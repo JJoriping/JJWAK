@@ -14,12 +14,12 @@ FS.mkdirSync(`./src/front/${PAGE}`);
 // TSX 복사
 FS.writeFileSync(
   `./src/front/${PAGE}/index.tsx`,
-  FS.readFileSync("./tools/page-template.tsx").toString().replace(/%%PAGE%%/g, PAGE)
+  FS.readFileSync("./tools/page-template.tsx.proto").toString().replace(/%%PAGE%%/g, PAGE)
 );
 // SCSS 복사
 FS.writeFileSync(
   `./src/front/${PAGE}/style.scss`,
-  FS.readFileSync("./tools/page-template.scss").toString().replace(/%%PAGE%%/g, PAGE)
+  FS.readFileSync("./tools/page-template.scss.proto").toString().replace(/%%PAGE%%/g, PAGE)
 );
 // 언어 파일 변경
 for(const v of FS.readdirSync(`./data/lang`)){

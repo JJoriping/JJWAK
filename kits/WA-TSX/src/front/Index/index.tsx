@@ -9,7 +9,7 @@ export default class Index extends JJorm<JJWAK.Page.Props>{
 
   render():React.ReactNode{
     return <article>
-      Hello, {this.props.page} and {L.get("test")}!
+      Hello, {this.props.page} and {L.render("test")}!
       <img src="/media/images/example-beach.jpg" />
     </article>;
   }
