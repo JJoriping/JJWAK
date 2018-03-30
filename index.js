@@ -50,7 +50,12 @@ function merge(PATH, sub = ""){
     let hashSrc, hashDest;
 
     if(FS.statSync(pathSrc).isDirectory()){
-      return merge(PATH, `${sub}/${v}`);
+      if(!FS.existsSync(pathDest)){
+        JJLog.log(`New directory: ${pathDest}`);
+        FS.mkdirSync(pathDest);
+      }
+      merge(PATH, `${sub}/${v}`);
+      continue;
     }
     JJLog.log("Compare two files:", pathSrc, pathDest);
     if(!FS.existsSync(pathDest)){
