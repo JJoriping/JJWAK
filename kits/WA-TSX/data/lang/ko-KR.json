@@ -1,8 +1,9 @@
 {
   "$global": {
-    "test": "반가워요"
+    "!note!": "Use this section as the global string table."
   },
   "Index": {
-    "title": "안녕, 세계!"
+    "title": "안녕, 세계!",
+    "test": "{{FA|@cog}}앱이 성{{FA|star}}공{{FA|star-o}}적으로 설치되었습니다{{FA|!spinner}}"
   }
 }

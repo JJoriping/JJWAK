@@ -8,6 +8,7 @@
   "license": "ISC",
   "private": true,
   "dependencies": {
-    "react": "^16.1.0"
+    "react": "^16.1.0",
+    "components-font-awesome": "^5.0.6"
   }
 }

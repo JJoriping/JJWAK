@@ -1,11 +1,13 @@
 import React = require("react");
+import { Icon } from "./Icon";
 
 type PatternResolver = (key:number, ...args:string[]) => React.ReactNode;
 
 export default class L{
   private static readonly TABLE = (window as any)['__LANGUAGE'];
   private static readonly PATTERN_RESOLVER:Table<PatternResolver> = {
-    'BR': key => <br key={key} />
+    'BR': key => <br key={key} />,
+    'FA': (key, name) => <Icon key={key} name={name} />
   };
 
   public static get(key:string, ...args:any[]):string{
