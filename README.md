@@ -1,12 +1,10 @@
-# JJWAK
+# JJWAK v1.2
 Integrated Web Application Development Kit for Windows
-## Version 1.1
-- Published on 180327
-- The first version :)
 
 ## Prerequisite
 - Node.js 8
 - Python 3
+- Git
 ## Setup
 1. `npm install -g github:JJoriping/JJWAK`
 1. Locate the project you want to start.
@@ -22,12 +20,18 @@ Integrated Web Application Development Kit for Windows
   - The modules are in `./src/front`
   - `page`: the page to be watched. `*` indicates all pages.
   - `!`: build in production mode (no watching)
+- `node .\tools\page.js page`: Create a page named `page`
+  - It creates a new directory and copy files from:
+    - `.\tools\page-template.scss.proto`
+    - `.\tools\page-template.tsx.proto`
+  - It opens all files in `.\data\lang` and append a field related to the page.
 ## Kits available
 - Currently only WA-TSX is supported.
 ## Modules used
 - Babel
 - Bower
 - Express
+- FontAwesome
 - Parcel
 - React
 - SCSS
