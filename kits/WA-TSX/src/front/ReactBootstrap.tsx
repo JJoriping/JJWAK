@@ -5,12 +5,13 @@ import Header from "./@global/Header";
 import Footer from "./@global/Footer";
 
 export default function Bind(TargetClass:any):void{
-  const $root = document.createElement("main");
+  const $root = document.createElement("section");
 
-  ReactDOM.render(<section id="stage">
+  $root.id = "stage";
+  ReactDOM.render(<>
     <Header />
     {React.createElement(TargetClass, "/*{JSON.stringify($)}*/")}
     <Footer />
-  </section>, $root);
+  </>, $root);
   document.body.appendChild($root);
 }

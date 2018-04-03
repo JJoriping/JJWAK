@@ -64,6 +64,7 @@ function merge(PATH, sub = ""){
       continue;
     }
     if(MD5.sync(pathSrc) === MD5.sync(pathDest)) continue;
+    if(ReadLine.question(`Merge ${pathSrc} into ${pathDest}. Proceed? (y/n)`) !== "y") continue;
     result = ChildProcess.spawnSync("git", [
       "merge-file", pathDest, EMPTY, pathSrc, "-p"
     ]).stdout;

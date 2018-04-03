@@ -1,14 +1,11 @@
 {
-  "name": "daldalso",
-  "description": "달과 달의 소리",
   "main": "dist/Main.js",
-  "authors": [
-    "JJoriping"
-  ],
-  "license": "ISC",
   "private": true,
   "dependencies": {
-    "react": "^16.1.0",
-    "components-font-awesome": "^5.0.6"
+    "components-font-awesome": "^5.0.6",
+    "react.development": "https://unpkg.com/react/umd/react.development.js",
+    "react.production.min": "https://unpkg.com/react/umd/react.production.min.js",
+    "react-dom.development": "https://unpkg.com/react-dom/umd/react-dom.development.js",
+    "react-dom.production.min": "https://unpkg.com/react-dom/umd/react-dom.production.min.js"
   }
 }
