@@ -4,8 +4,8 @@
   "cookie-age": 604800000,
   "cookie-secret": "jjwak",
   "crypto-secret": "jjwakjjwak",
-  "language-support": [
-    "ko-KR"
-  ],
+  "language-support": {
+    "ko-KR": "한국어"
+  },
   "port": 4416
 }

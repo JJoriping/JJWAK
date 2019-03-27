@@ -3,7 +3,7 @@
   "scripts": {
     "start": "node dist/Main",
     "settle": "CALL ./tools/install.cmd --pre && yarn && CALL ./tools/install.cmd && CALL ./tools/build.cmd",
-    "build": "call ./tools/build.cmd"
+    "build": "CALL ./tools/build.cmd"
   },
   "globalDependencies": [
     "typescript",
@@ -12,10 +12,12 @@
     "yarn"
   ],
   "frontDependencies": {
+    "font-awesome": "@fortawesome/fontawesome-free",
     "react": "react/umd",
     "react-dom": "react-dom/umd"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.8.0",
     "accept-language-parser": "^1.5.0",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",

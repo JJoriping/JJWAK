@@ -26,7 +26,7 @@ declare namespace JJWAK{
       'key': string,
       'cert': string
     },
-    'language-support': string[]
+    'language-support': Table<string>
     'port': number,
   };
 }

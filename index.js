@@ -65,7 +65,7 @@ function merge(PATH, sub = ""){
     }
     if(MD5.sync(pathSrc) === MD5.sync(pathDest)) continue;
     result = ChildProcess.spawnSync("git", [
-      "merge-file", pathDest, EMPTY, pathSrc, "-p"
+      "merge-file", "-p", pathDest, EMPTY, pathSrc
     ]).stdout;
     FS.writeFileSync(pathDest, result);
     mergedFiles.push(pathDest);

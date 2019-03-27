@@ -38,10 +38,7 @@
       }
     },
     "language-support": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
+      "type": "object"
     },
     "port": {
       "type": "number"

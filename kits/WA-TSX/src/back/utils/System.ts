@@ -92,8 +92,10 @@ export function loadEndpoints():void{
   const $items = endpoints['$items'] as Table<any>;
   const $global = reduceToTable(endpoints['$global'], v => $items[v]);
   
-  delete endpoints['$items'];
   for(const k in endpoints){
+    if(k.startsWith("$")){
+      continue;
+    }
     R[k] = Object.assign({}, $global, reduceToTable(endpoints[k], v => $items[v]));
   }
   Object.assign(ENDPOINTS, R);
