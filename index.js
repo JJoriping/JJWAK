@@ -31,12 +31,12 @@ function main(){
   // 그렇지 않다면 단순 복사한다.
   NCP(KIT_PATH, CWD, err => {
     if(err) return JJLog.error(err);
+    FS.mkdirSync(`${CWD}/dist/libs`);
     JJLog.success(`The kit ${KIT} has been copied to ${CWD}!`);
     
     JJLog.info("You can use these commands to install and build completely:");
-    JJLog.info("\t> npm install");
-    JJLog.info("\t> npm run build");
-    JJLog.info("\t> npm start");
+    JJLog.info("\t> yarn run settle");
+    JJLog.info("\t> yarn start");
   });
 }
 function merge(PATH, sub = ""){
