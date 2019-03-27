@@ -2,13 +2,23 @@
   "title": "root",
   "type": "object",
   "required": [
-    "port",
     "cookie-secret",
-    "language-support"
+    "crypto-secret",
+    "language-support",
+    "port"
   ],
   "properties": {
-    "port": {
-      "type": "number"
+    "application": {
+      "type": "object"
+    },
+    "cookie-age": {
+      "type": "integer"
+    },
+    "cookie-secret": {
+      "type": "string"
+    },
+    "crypto-secret": {
+      "type": "string"
     },
     "https": {
       "type": "object",
@@ -27,14 +37,14 @@
         }
       }
     },
-    "cookie-secret": {
-      "type": "string"
-    },
     "language-support": {
       "type": "array",
       "items": {
         "type": "string"
       }
+    },
+    "port": {
+      "type": "number"
     }
   }
 }

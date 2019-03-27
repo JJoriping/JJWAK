@@ -1,17 +1,21 @@
 const FS = require("fs");
-const JJLog = require("jj-log").default;
-const SETTINGS = require("../data/settings.json");
+const Logger = require("jj-log").default;
+const SETTINGS = Object.assign(
+  {},
+  require("../data/settings.json"),
+  require("../data/settings.dev.json")
+);
 const REQ = SETTINGS['https'] ? require("https") : require("http");
 
 FS.watch("./data/lang", (e, file) => {
-  JJLog.info(`%F_CYAN%WATCH%NORMAL% LANG ${file}`);
+  Logger.info(`%F_CYAN%WATCH%NORMAL% LANG ${file}`);
   REQ.request({
     hostname: "localhost",
     port: SETTINGS['port'],
-    path: "/gwalli/load-languages",
+    path: "/admin/load-languages",
     method: "GET",
     rejectUnauthorized: false
   }).on('error', err => {
-    JJLog.error(err);
+    Logger.error(err);
   }).end();
 });

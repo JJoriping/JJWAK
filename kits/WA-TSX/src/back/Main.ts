@@ -1,11 +1,11 @@
-import Path = require("path");
 import Express = require("express");
-import CookieParser = require("cookie-parser");
 import Spdy = require("spdy");
 import Logger from "jj-log";
 
-import ReactNest = require("./utils/ReactNest");
-import { getProjectData, SETTINGS } from "./utils/System";
+import Route from "./utils/Route";
+import ExpressAgent from "./utils/ExpressAgent";
+import { getProjectData, SETTINGS, DEVELOPMENT, loadEndpoints } from "./utils/System";
+import { loadLanguages } from "./utils/Language";
 
 const SPDY_OPTIONS:Spdy.server.ServerOptions = SETTINGS['https'] ? {
   key: getProjectData(SETTINGS['https']['key']),
@@ -13,21 +13,13 @@ const SPDY_OPTIONS:Spdy.server.ServerOptions = SETTINGS['https'] ? {
 } : null;
 const App = Express();
 
-App.engine("js", ReactNest.Engine);
-App.set('views', Path.resolve(__dirname, "./pages"));
-App.set('view engine', "js");
-
-App.use(CookieParser(SETTINGS['cookie-secret']));
-App.use("/libs", Express.static(Path.resolve(__dirname, "./libs")));
-App.use("/media", Express.static(Path.resolve(__dirname, "./media")));
-App.use("/pages", Express.static(Path.resolve(__dirname, "./pages")));
-
-App.get("/gwalli/load-languages", (req, res) => {
-  ReactNest.loadLanguages();
-  res.sendStatus(200);
-});
-App.get("/", ReactNest.PageBuilder("Index"));
-
+if(DEVELOPMENT){
+  Logger.warn("Development");
+}
+loadLanguages();
+loadEndpoints();
+ExpressAgent(App);
+Route(App);
 if(SPDY_OPTIONS){
   Spdy.createServer(SPDY_OPTIONS, App).listen(SETTINGS['port'], () => {
     Logger.success("HTTPS Server", SETTINGS['port']);
@@ -37,3 +29,6 @@ if(SPDY_OPTIONS){
     Logger.success("HTTP Server", SETTINGS['port']);
   });
 }
+process.on('unhandledRejection', (err:Error) => {
+  Logger.error("Unhandled promise rejection", err.stack);
+});

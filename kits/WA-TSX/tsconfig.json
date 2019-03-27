@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es2015",
+    "target": "es2017",
     "jsx": "react",
     "baseUrl": "./src",
+    "sourceMap": true,
 
     "noImplicitAny": true,
     "noImplicitThis": true,

@@ -1,14 +1,16 @@
 <!doctype html>
-<html>
+<html lang="/*{JSON.stringify($.locale)}*/">
   <head>
     <meta charset="utf8" />
+    <meta name="viewport" content="width=device-width" />
     <title>/* %%TITLE%% */</title>
-    <link rel="stylesheet" href="/pages//*{$.page}*/.css" />
-    <link rel="stylesheet" href="/libs/components-font-awesome/css/fontawesome-all.min.css" />
+    <link rel="stylesheet" href="/libs/font-awesome/css/all.min.css" />
     <script type="text/javascript" src="/libs/react/react./* %%REACT_SUFFIX%% */.js"></script>
-    <script type="text/javascript" src="/libs/react/react-dom./* %%REACT_SUFFIX%% */.js"></script>
+    <script type="text/javascript" src="/libs/react-dom/react-dom./* %%REACT_SUFFIX%% */.js"></script>
+    <style>/* %%STYLE%% */</style>
   </head>
   <body>
+    <section id="stage"></section>
     <script type="text/javascript">window.__LANGUAGE="/* %%LANGUAGE%% */";/* %%BODY%% */</script>
   </body>
 </html>

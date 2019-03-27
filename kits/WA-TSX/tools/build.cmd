@@ -1,2 +1,3 @@
 CALL .\watch-back.cmd !
-CALL .\watch-front.cmd * !
+CALL webpack
+CALL node .\tools\build-scss.js

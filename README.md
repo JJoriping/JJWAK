@@ -1,4 +1,4 @@
-# JJWAK v1.2
+# JJWAK v1.3
 Integrated Web Application Development Kit for Windows
 
 ## Prerequisite
@@ -9,8 +9,7 @@ Integrated Web Application Development Kit for Windows
 1. `npm install -g github:JJoriping/JJWAK`
 1. Locate the project you want to start.
 1. `jjwak`
-1. `npm install`
-1. `npm run build`
+1. `npm run settle`
 1. `npm start`
 ## Development
 - `.\watch-back.cmd [!]`: Watch back-end modules and build
@@ -29,10 +28,8 @@ Integrated Web Application Development Kit for Windows
 - Currently only WA-TSX is supported.
 ## Modules used
 - Babel
-- Bower
 - Express
 - FontAwesome
-- Parcel
 - React
 - SCSS
 - SPDY

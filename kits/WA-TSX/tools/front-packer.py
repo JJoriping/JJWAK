@@ -13,8 +13,7 @@ def start_webpack(options):
     return subprocess.Popen([
       "webpack", "-p",
       "--entry", "./src/front/%s/index.tsx" % options['page'],
-      "--output", "./dist/pages/%s.js" % options['page'],
-      "--resolve-extensions", ".ts,.tsx"
+      "--output", "./dist/pages/%s.js" % options['page']
     ], shell=True)
   else:
     # Webpack for development
@@ -23,8 +22,7 @@ def start_webpack(options):
       "--mode", "development",
       "--devtool", "false",
       "--entry", "./src/front/%s/index.tsx" % options['page'],
-      "--output", "./dist/pages/%s.js" % options['page'],
-      "--resolve-extensions", ".ts,.tsx"
+      "--output", "./dist/pages/%s.js" % options['page']
     ], shell=True)
 
 def start_scss(options):

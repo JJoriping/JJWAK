@@ -2,10 +2,18 @@
   "main": "dist/Main.js",
   "scripts": {
     "start": "node dist/Main",
-    "setup": "node ./tools/setup",
-    "preinstall": "call ./tools/install.cmd --pre",
-    "postinstall": "call ./tools/install.cmd",
+    "settle": "CALL ./tools/install.cmd --pre && yarn && CALL ./tools/install.cmd && CALL ./tools/build.cmd",
     "build": "call ./tools/build.cmd"
+  },
+  "globalDependencies": [
+    "typescript",
+    "webpack",
+    "webpack-cli",
+    "yarn"
+  ],
+  "frontDependencies": {
+    "react": "react/umd",
+    "react-dom": "react-dom/umd"
   },
   "dependencies": {
     "accept-language-parser": "^1.5.0",
@@ -26,9 +34,12 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
-    "bower": "^1.8.2",
     "node-sass": "^4.8.3",
     "ts-loader": "^4.1.0",
-    "typescript": "^2.7.2"
+    "typescript": "^3.3.1",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "engines": {
+    "yarn": ">= 1.0.0"
   }
 }

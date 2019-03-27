@@ -1,8 +1,11 @@
 {
   "$schema": "./settings.schema.json",
-  "port": 4416,
-  "cookie-secret": "jjo-dds",
+  "application": {},
+  "cookie-age": 604800000,
+  "cookie-secret": "jjwak",
+  "crypto-secret": "jjwakjjwak",
   "language-support": [
     "ko-KR"
-  ]
+  ],
+  "port": 4416
 }
