@@ -3,14 +3,15 @@ Integrated Web Application Development Kit for Windows
 
 ## Prerequisite
 - Node.js 8
+- Yarn
 - Python 3
 - Git
 ## Setup
-1. `npm install -g github:JJoriping/JJWAK`
+1. `yarn install -g github:JJoriping/JJWAK`
 1. Locate the project you want to start.
 1. `jjwak`
-1. `npm run settle`
-1. `npm start`
+1. `yarn run settle`
+1. `yarn start`
 ## Development
 - `.\watch-back.cmd [!]`: Watch back-end modules and build
   - The modules are in `./src/back`
