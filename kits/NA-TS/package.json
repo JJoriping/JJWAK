@@ -1,0 +1,29 @@
+{
+  "main": "dist/Main.js",
+  "scripts": {
+    "start": "node dist/Main",
+    "settle": "yarn && CALL node ./tools/setup.js && webpack -p",
+    "build": "webpack -p"
+  },
+  "globalDependencies": [
+    "typescript",
+    "webpack",
+    "webpack-cli",
+    "yarn"
+  ],
+  "dependencies": {
+    "jj-log": "bitbucket:jjo_kr/jj-log"
+  },
+  "devDependencies": {
+    "@types/node": "^11.13.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "ts-loader": "^4.1.0",
+    "typescript": "^3.3.1",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "engines": {
+    "yarn": ">= 1.0.0"
+  }
+}

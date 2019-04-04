@@ -1,4 +1,4 @@
-# JJWAK v1.3
+# JJWAK v1.4
 Integrated Web Application Development Kit for Windows
 
 ## Prerequisite
@@ -13,6 +13,7 @@ Integrated Web Application Development Kit for Windows
 1. `yarn run settle`
 1. `yarn start`
 ## Development
+### WA-TAX
 - `.\watch-back.cmd [!]`: Watch back-end modules and build
   - The modules are in `./src/back`
   - `!`: build in production mode (no watching)
@@ -26,7 +27,8 @@ Integrated Web Application Development Kit for Windows
     - `.\tools\page-template.tsx.proto`
   - It opens all files in `.\data\lang` and append a field related to the page.
 ## Kits available
-- Currently only WA-TSX is supported.
+- **NA-TS**: Node.js Application with TypeScript
+- **WA-TSX**: Web Application with TypeScript & React
 ## Modules used
 - Babel
 - Express

@@ -1,11 +1,14 @@
 const Path = require("path");
 const NodeExternals = require("webpack-node-externals");
 
+const IS_FOR_PRODUCTION = process.argv.includes("-p");
+
 module.exports = {
+  mode: IS_FOR_PRODUCTION ? "production" : "development",
   target: "node",
-  entry: Path.resolve(__dirname, "../src/back/Main.ts"),
+  entry: Path.resolve(__dirname, "./src/Main.ts"),
   output: {
-    path: Path.join(__dirname, "../dist"),
+    path: Path.join(__dirname, "./dist"),
     filename: "Main.js"
   },
   node: {
@@ -15,8 +18,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.ts$/,
         use: [
+          // NOTE regeneratorRuntime is not defined 오류
+          ...(IS_FOR_PRODUCTION ? [{
+            loader: "babel-loader"
+          }] : []),
           {
             loader: "ts-loader"
           }
@@ -25,11 +32,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [ ".ts", ".tsx" ],
-    alias: {
-      'back': Path.resolve(__dirname, "../src/back"),
-      'front': Path.resolve(__dirname, "../src/front")
-    }
+    extensions: [ ".ts", ".js" ]
   },
   externals: [
     NodeExternals()

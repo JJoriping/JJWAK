@@ -10,11 +10,27 @@ const EMPTY = `${__dirname}/empty`;
 const mergedFiles = [];
 
 function main(){
+  let kit;
+
   JJLog.success("Welcome to JJWAK!");
-  // 추후 WA-TSX 키트 외의 다른 키트가 생기게 된다면
-  // 이곳에서 키트를 고를 수 있도록 해야 한다.
-  const KIT = "WA-TSX";
-  const KIT_PATH = `${__dirname}/kits/${KIT}`;
+  JJLog.info(
+    "Which kit do you want?",
+    "%B_WHITE%%F_BLACK%(1)%NORMAL% %F_YELLOW%NA-TS%NORMAL% for Node.js with TypeScript",
+    "%B_WHITE%%F_BLACK%(2)%NORMAL% %F_YELLOW%WA-TSX%NORMAL% for Web with TypeScript & React"
+  );
+  switch(ReadLine.questionInt()){
+    case 1:
+      kit = "NA-TS";
+      break;
+    case 2:
+      kit = "WA-TSX";
+      break;
+    default:
+      JJLog.error("Type a number above!");
+      process.exit();
+      return;
+  }
+  const KIT_PATH = `${__dirname}/kits/${kit}`;
 
   // 프로젝트가 이미 존재한다면 이전 버전의 JJWAK을 대체한다.
   if(FS.existsSync(`${CWD}/package.json`)){
@@ -31,8 +47,11 @@ function main(){
   // 그렇지 않다면 단순 복사한다.
   NCP(KIT_PATH, CWD, err => {
     if(err) return JJLog.error(err);
+    if(!FS.existsSync(`${CWD}/dist`)){
+      FS.mkdirSync(`${CWD}/dist`);
+    }
     FS.mkdirSync(`${CWD}/dist/libs`);
-    JJLog.success(`The kit ${KIT} has been copied to ${CWD}!`);
+    JJLog.success(`The kit ${kit} has been copied to ${CWD}!`);
     
     JJLog.info("You can use these commands to install and build completely:");
     JJLog.info("\t> yarn run settle");
@@ -47,7 +66,6 @@ function merge(PATH, sub = ""){
     const pathSrc = `${dir}/${v}`;
     const pathDest = `${CWD}${sub}/${v}`;
     let result;
-    let hashSrc, hashDest;
 
     if(FS.statSync(pathSrc).isDirectory()){
       if(!FS.existsSync(pathDest)){
