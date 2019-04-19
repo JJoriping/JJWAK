@@ -1,6 +1,13 @@
 {
   "$global": {
-    "!note!": "Use this section as the global string table."
+    "MINUTES_0": "방금",
+    "MINUTES_1": "{#0} 분",
+    "MINUTES_2": "{#0} 시간 {#1} 분",
+    "MINUTES_3": "{#0} 일 {#1} 시간",
+    "MINUTES_4": "{#0} 개월 {#1} 일",
+    
+    "TIME_DISTANCE_PAST": "<{HUMAN_M|{##0}}> 전",
+    "TIME_DISTANCE_FUTURE": "<{HUMAN_M|{##0}}> 후"
   },
   "Index": {
     "title": "안녕, 세계!",

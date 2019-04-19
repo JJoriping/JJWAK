@@ -1,4 +1,8 @@
 /**
+ * 프론트엔드 여부.
+ */
+export const FRONT:boolean = !Boolean("/*{APP['false-if-front']}*/");
+/**
  * 배열을 주어진 함수에 따라 딕셔너리로 바꾸어 반환한다.
  *
  * @param target 대상 배열.

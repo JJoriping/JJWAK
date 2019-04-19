@@ -74,6 +74,7 @@ export function Engine<T extends JJWAK.Page.Type>(
     const APP = {
       ...SETTINGS.application,
       'endpoints': ENDPOINTS[$.page],
+      'false-if-front': false,
       'language-support': SETTINGS['language-support']
     };
     const HTML = HTML_TEMPLATE
