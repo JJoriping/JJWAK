@@ -6,8 +6,8 @@ const Logger = require("jj-log").default;
 const SETTINGS = require("../data/settings.json");
 const SOURCE = Path.resolve(__dirname, "..");
 
-const DESTINATION = "/jjo/server";
-const SYNC = [ "data", "dist" ];
+const DESTINATION = SETTINGS['ssh']['remote-directory'];
+const SYNC = SETTINGS['ssh']['local-directories'];
 
 const CACHE_PATH = "./tools/publish-cache.json";
 const START_TIME = Date.now();
@@ -78,10 +78,15 @@ async function upload(changes){
     const stat = FS.lstatSync(pathSrc);
 
     if(stat.isSymbolicLink()){
-      Logger.warn("Symbolic Link", pathSrc);
-      continue;
-    }
-    if(stat.isDirectory()){
+      const target = FS.readlinkSync(pathSrc).replace(/\\/g, "/");
+
+      try{
+        Logger.info("Creating symbolic link", pathSrc, target);
+        FS.symlinkSync(Path.resolve(pathDest, "..", target), pathDest, "dir");
+      }catch(e){
+        Logger.error(v, e);
+      }
+    }else if(stat.isDirectory()){
       try{
         await client.mkdir(Path.join(DESTINATION, v));
       }catch(e){
