@@ -33,7 +33,7 @@ export function getLanguageTable(locale:string, page:string):Table<string>{
 export function getLocale(req:Express.Request):string{
   let R:string = req.cookies['dds.locale'];
 
-  if(!LANGUAGES || !LANGUAGES[R]){
+  if(!LANGUAGES || !SETTINGS['language-support'][R]){
     R = ALP.pick(LANGUAGE_SUPPORT, String(req.headers['accept-language'])) || LANGUAGE_SUPPORT[0];
   }
   return R;
