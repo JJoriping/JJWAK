@@ -7,7 +7,7 @@ Integrated Web Application Development Kit for Windows
 - Python 3
 - Git
 ## Setup
-1. `yarn install -g github:JJoriping/JJWAK`
+1. `yarn global add github:JJoriping/JJWAK`
 1. Locate the project you want to start.
 1. `jjwak`
 1. `yarn run settle`
