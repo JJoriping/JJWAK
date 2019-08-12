@@ -24,7 +24,8 @@
     "jj-log": "bitbucket:jjo_kr/jj-log",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "spdy": "^3.4.7"
+    "spdy": "^3.4.7",
+    "typeorm": "^0.2.18"
   },
   "devDependencies": {
     "@types/accept-language-parser": "^1.4.0",

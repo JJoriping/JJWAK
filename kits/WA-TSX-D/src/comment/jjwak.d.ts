@@ -23,13 +23,28 @@ declare namespace JJWAK{
      * 
      * 개발 플래그 설정 여부.
      */
-    'development'?: boolean
+    'development'?: boolean,
+    /**
+     * `--query`
+     * 
+     * 데이터베이스 쿼리 출력 여부.
+     */
+    'queryLogging'?: boolean
   };
   type Settings = {
     'application': {},
     'cookie-age': number,
     'cookie-secret': string,
     'crypto-secret': string,
+    'database': {
+      'host': string,
+      'port': number,
+      'username': string,
+      'password': string,
+      'database': string,
+      'connectTimeout': number,
+      'maxQueryExecutionTime': number
+    },
     'https': {
       'key': string,
       'cert': string

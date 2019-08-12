@@ -16,7 +16,8 @@ function main(){
   JJLog.info(
     "Which kit do you want?",
     "%B_WHITE%%F_BLACK%(1)%NORMAL% %F_YELLOW%NA-TS%NORMAL% for Node.js with TypeScript",
-    "%B_WHITE%%F_BLACK%(2)%NORMAL% %F_YELLOW%WA-TSX%NORMAL% for Web with TypeScript & React"
+    "%B_WHITE%%F_BLACK%(2)%NORMAL% %F_YELLOW%WA-TSX%NORMAL% for Web with TypeScript & React",
+    "%B_WHITE%%F_BLACK%(3)%NORMAL% %F_YELLOW%WA-TSX-D%NORMAL% for Web with TypeScript & React including Database"
   );
   switch(ReadLine.questionInt()){
     case 1:
@@ -24,6 +25,9 @@ function main(){
       break;
     case 2:
       kit = "WA-TSX";
+      break;
+    case 3:
+      kit = "WA-TSX-D";
       break;
     default:
       JJLog.error("Type a number above!");
