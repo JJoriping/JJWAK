@@ -4,6 +4,7 @@
   "cookie-age": 604800000,
   "cookie-secret": "jjwak",
   "crypto-secret": "jjwakjjwak",
+  "database": {},
   "language-support": {
     "ko-KR": "한국어"
   },

@@ -20,6 +20,32 @@
     "crypto-secret": {
       "type": "string"
     },
+    "database": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "database": {
+          "type": "string"
+        },
+        "connectionTimeout": {
+          "type": "integer"
+        },
+        "maxQueryExecutionTime": {
+          "type": "integer"
+        }
+      }
+    },
     "https": {
       "type": "object",
       "required": [
