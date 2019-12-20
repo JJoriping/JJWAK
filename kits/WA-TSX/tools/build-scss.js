@@ -1,24 +1,23 @@
 const FS = require("fs");
 const Path = require("path");
 const SASS = require("node-sass");
-const Logger = require("jj-log").default;
 
-const Common = require("./common");
+const Common = require("./lib/common");
 
 async function main(){
   for(const k in Common.WP_ENTRIES){
     try{
       const result = await run(k);
 
-      Logger.success("node-sass", k, `in ${result.stats.duration}ms`);
+      console.info("node-sass", k, `in ${result.stats.duration}ms`);
     }catch(err){
-      Logger.error("node-sass", err, `at ${err.file}(${err.line},${err.column})`);
+      console.error("node-sass", err, `at ${err.file}(${err.line},${err.column})`);
       break;
     }
   }
 }
 async function run(page){
-  Logger.log(page);
+  console.log(page);
 
   return new Promise((res, rej) => {
     Common.flushImporterTable();
@@ -37,6 +36,6 @@ async function run(page){
   })
 }
 main().then(() => {
-  Logger.info("Finished!");
+  console.info("Finished!");
   process.exit();
 });

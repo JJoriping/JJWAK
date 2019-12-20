@@ -6,6 +6,7 @@ declare namespace Express{
     locale:string;
   }
   export interface Response{
+    metadata:JJWAK.Page.Metadata;
     removeCookie(name:string, path?:string):Express.Response;
     setCookie(name:string, value:any, path?:string):Express.Response;
   }

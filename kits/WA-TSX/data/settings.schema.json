@@ -3,7 +3,6 @@
   "type": "object",
   "required": [
     "cookie-secret",
-    "crypto-secret",
     "language-support",
     "port"
   ],
@@ -11,14 +10,16 @@
     "application": {
       "type": "object"
     },
-    "cookie-age": {
-      "type": "integer"
-    },
-    "cookie-secret": {
-      "type": "string"
-    },
-    "crypto-secret": {
-      "type": "string"
+    "cookie": {
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "integer"
+        },
+        "secret": {
+          "type": "string"
+        }
+      }
     },
     "https": {
       "type": "object",
@@ -40,40 +41,19 @@
     "language-support": {
       "type": "object"
     },
-    "port": {
-      "type": "number"
-    },
-    "ssh": {
+    "log": {
       "type": "object",
       "properties": {
-        "host": {
+        "directory": {
           "type": "string"
         },
-        "port": {
-          "type": "number"
-        },
-        "username": {
-          "type": "string"
-        },
-        "identity": {
-          "type": "string"
-        },
-        "passphrase": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        },
-        "remote-directory": {
-          "type": "string"
-        },
-        "local-directories": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+        "interval": {
+          "type": "integer"
         }
       }
+    },
+    "port": {
+      "type": "number"
     }
   }
 }

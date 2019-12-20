@@ -1,5 +1,4 @@
 import TypeORM = require("typeorm");
-import Logger from "jj-log";
 
 import { SETTINGS } from "./System";
 import { CLOTHES } from "./Clothes";
@@ -7,6 +6,7 @@ import { Iterator } from "./Utility";
 
 // AUTO DB-IMPORT
 import Example from "back/models/Example";
+import { Logger } from "./Logger";
 
 export default class DB{
   private static agent:TypeORM.Connection;
@@ -28,7 +28,7 @@ export default class DB{
       logging: CLOTHES.queryLogging ? [ "query" ] : [],
       entities
     });
-    Logger.success("DB", SETTINGS['database'].host);
+    Logger.success("DB").put(SETTINGS['database'].host).out();
   }
   public static paginate(length:number, page:number):DB.PaginateOptions{
     return {

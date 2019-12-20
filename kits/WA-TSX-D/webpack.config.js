@@ -1,5 +1,5 @@
 const Path = require("path");
-const Common = require("./tools/common");
+const Common = require("./tools/lib/common");
 
 const IS_FOR_PRODUCTION = process.argv.includes("-p");
 const IS_STANDALONE = !process.argv.includes("--py");

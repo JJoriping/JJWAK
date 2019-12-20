@@ -1,8 +1,8 @@
-import Crypto = require("crypto");
 import FS = require("fs");
 import Path = require("path");
-import Logger from "jj-log";
-import { reduceToTable } from "./Utility";
+
+import { reduceToTable, TIMEZONE_OFFSET } from "./Utility";
+import { Logger } from "./Logger";
 
 /**
  * 개발 플래그 설정 여부.
@@ -25,24 +25,6 @@ export const SETTINGS:JJWAK.Settings = Object.assign(
  */
 export const PACKAGE:Table<any> = JSON.parse(getProjectData("../package.json").toString());
 
-const PBKDF2_ITER = 121234;
-const PBKDF2_LENGTH = 64;
-const PBKDF2_METHOD = "sha512";
-
-/**
- * 주어진 문자열을 단방향 암호화하여 반환한다.
- *
- * @param text 암호화할 문자열.
- * @param salt 암호화 솔트 값.
- * @param length 암호화된 문자열 길이.
- */
-export function getEncrypted(
-  text:string = "",
-  salt:string = SETTINGS['crypto-secret'],
-  length:number = PBKDF2_LENGTH
-):string{
-  return Crypto.pbkdf2Sync(text, salt, PBKDF2_ITER, length >> 1, PBKDF2_METHOD).toString("hex");
-}
 /**
  * 프로젝트 데이터 폴더의 데이터를 동기식으로 읽어 그 내용을 반환한다.
  *
@@ -52,7 +34,7 @@ export function getProjectData(path:string):Buffer{
   try{
     return FS.readFileSync(Path.resolve(__dirname, `../data/${path}`));
   }catch(e){
-    Logger.error(e);
+    Logger.error().put(e).out();
     return null;
   }
 }
@@ -72,14 +54,6 @@ export function setProjectData(path:string, data:any):Promise<void>{
       res();
     });
   });
-}
-/**
- * 임의의 해시를 생성해 반환한다.
- *
- * @param length 암호화된 문자열 길이.
- */
-export function getRandomHash(length:number = PBKDF2_LENGTH):string{
-  return getEncrypted(String(Math.random()), String(Date.now()), length);
 }
 /**
  * 프로젝트 데이터 폴더 내의 종점 파일을 새로 읽어 가공 후 메모리에 올린다.
@@ -102,11 +76,28 @@ export function loadEndpoints():void{
 }
 /**
  * 주어진 함수가 주기적으로 호출되도록 한다.
- * 
+ *
  * @param callback 매번 호출할 함수.
- * @param interval 호출 주기(ms).
+ * @param interval 호출 주기(㎳).
+ * @param options 설정 객체.
  */
-export function schedule(callback:(...args:any[]) => void, interval:number):void{
-  callback();
-  global.setInterval(callback, interval);
+export function schedule(
+  callback:(...args:any[]) => void,
+  interval:number,
+  options?:Partial<JJWAK.ScheduleOptions>
+):void{
+  if(options?.callAtStart){
+    callback();
+  }
+  if(options?.punctual){
+    const now = Date.now() + TIMEZONE_OFFSET;
+    const gap = (1 + Math.floor(now / interval)) * interval - now;
+
+    global.setTimeout(() => {
+      callback();
+      global.setInterval(callback, interval);
+    }, gap);
+  }else{
+    global.setInterval(callback, interval);
+  }
 }

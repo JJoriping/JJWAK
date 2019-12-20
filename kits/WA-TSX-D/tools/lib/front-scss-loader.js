@@ -1,7 +1,6 @@
 const FS = require("fs");
 const Path = require("path");
 const SASS = require("node-sass");
-const Logger = require("jj-log").default;
 
 const Common = require("./common");
 
@@ -18,19 +17,19 @@ const RENDER_GAP = 500;
 let changeDetected = false;
 
 if(IS_FOR_PROC){
-  Logger.warn("PRODUCTION MODE!");
+  console.warn("PRODUCTION MODE!");
   OPTIONS.outputStyle = "compressed";
   SASS.render(OPTIONS, onComplete);
 }else{
   SASS.render(OPTIONS, onComplete);
   if(PAGE === "*"){
-    Logger.warn("Development mode doesn't support asterisk.");
+    console.warn("Development mode doesn't support asterisk.");
   }
   FS.watch("./src/front", { recursive: true }, (c, file) => {
     if(changeDetected) return;
     if(!file.match(/\.scss$/)) return;
     changeDetected = true;
-    Logger.info(`%F_CYAN%WATCH%NORMAL% SCSS ${PAGE} (by ${file})`);
+    console.info(`[WATCH] SCSS ${PAGE} (by ${file})`);
     setTimeout(() => {
       Common.flushImporterTable();
       SASS.render(OPTIONS, onComplete);
@@ -39,13 +38,13 @@ if(IS_FOR_PROC){
 }
 function onComplete(err, res){
   if(err){
-    Logger.error(err, `${err.file}(${err.line},${err.column})`);
+    console.error(err, `${err.file}(${err.line},${err.column})`);
     changeDetected = false;
     return;
   }
   FS.writeFile(OPTIONS.outFile, res.css, err => {
     if(err){
-      Logger.error(err);
+      console.error(err);
       changeDetected = false;
       return;
     }
@@ -66,13 +65,11 @@ function onComplete(err, res){
     }else{
       dependencies = dependencies.slice(0, 5).map(toDependencyText);
     }
-    Logger.success(
-      `${PAGE} at ${res.stats.duration}ms`,
-      ...dependencies
-    );
+    console.info(`${PAGE} at ${res.stats.duration}ms`);
+    console.log(dependencies.join('\n'));
     changeDetected = false;
   });
   function toDependencyText([ k, v ]){
-    return `{%F_YELLOW%${v.length}%NORMAL%} ${Path.relative(ROOT, k)}`;
+    return `{${v.length}} ${Path.relative(ROOT, k)}`;
   }
 }

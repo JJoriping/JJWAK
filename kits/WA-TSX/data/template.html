@@ -3,14 +3,16 @@
   <head>
     <meta charset="utf8" />
     <meta name="viewport" content="width=device-width" />
-    <title>/* %%TITLE%% */</title>
+    <title>/*{$.title}*/</title>
     <link rel="stylesheet" href="/libs/font-awesome/css/all.min.css" />
-    <script type="text/javascript" src="/libs/react/react./* %%REACT_SUFFIX%% */.js"></script>
-    <script type="text/javascript" src="/libs/react-dom/react-dom./* %%REACT_SUFFIX%% */.js"></script>
-    <style>/* %%STYLE%% */</style>
+    <link rel="stylesheet" href="/pages//*{$.page}*/.css" />
+    <script type="text/javascript">Object['FRONT']=true;window.__PROPS="/*{JSON.stringify($)}*/"</script>
+    <script type="text/javascript" src="/libs/react/react./*{REACT_SUFFIX}*/.js"></script>
+    <script type="text/javascript" src="/libs/react-dom/react-dom./*{REACT_SUFFIX}*/.js"></script>
   </head>
   <body>
     <section id="stage"></section>
-    <script type="text/javascript">window.__LANGUAGE="/* %%LANGUAGE%% */";/* %%BODY%% */</script>
+    <script type="text/javascript" src="/strings//*{$.locale}*/./*{$.page}*/.js"></script>
+    <script type="text/javascript" src="/pages//*{$.page}*/.js"></script>
   </body>
 </html>
