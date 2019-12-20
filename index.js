@@ -3,7 +3,6 @@ const ChildProcess = require("child_process");
 const MD5 = require("md5-file");
 const NCP = require("ncp").ncp;
 const ReadLine = require("readline-sync");
-const JJLog = require("jj-log").default;
 
 const CWD = process.cwd();
 const EMPTY = `${__dirname}/empty`;
@@ -12,12 +11,12 @@ const mergedFiles = [];
 function main(){
   let kit;
 
-  JJLog.success("Welcome to JJWAK!");
-  JJLog.info(
-    "Which kit do you want?",
-    "%B_WHITE%%F_BLACK%(1)%NORMAL% %F_YELLOW%NA-TS%NORMAL% for Node.js with TypeScript",
-    "%B_WHITE%%F_BLACK%(2)%NORMAL% %F_YELLOW%WA-TSX%NORMAL% for Web with TypeScript & React",
-    "%B_WHITE%%F_BLACK%(3)%NORMAL% %F_YELLOW%WA-TSX-D%NORMAL% for Web with TypeScript & React including Database"
+  console.info("Welcome to JJWAK!");
+  console.info(
+    "Which kit do you want?\n",
+    "(1) NA-TS    for Node.js with TypeScript\n",
+    "(2) WA-TSX   for Web with TypeScript & React\n",
+    "(3) WA-TSX-D for Web with TypeScript & React including Database"
   );
   switch(ReadLine.questionInt()){
     case 1:
@@ -30,7 +29,7 @@ function main(){
       kit = "WA-TSX-D";
       break;
     default:
-      JJLog.error("Type a number above!");
+      console.error("Type a number above!");
       process.exit();
       return;
   }
@@ -38,11 +37,11 @@ function main(){
 
   // 프로젝트가 이미 존재한다면 이전 버전의 JJWAK을 대체한다.
   if(FS.existsSync(`${CWD}/package.json`)){
-    JJLog.warn("A project already exists here!");
+    console.warn("A project already exists here!");
     if(ReadLine.question("Proceed? (y/n): ") === "y"){
       merge(KIT_PATH);
-      JJLog.warn(`Merged file(s): (${mergedFiles.length} total)`, ...mergedFiles);
-      JJLog.warn("Please check them all!");
+      console.warn(`Merged file(s): (${mergedFiles.length} total)`, ...mergedFiles);
+      console.warn("Please check them all!");
     }else{
       process.exit();
     }
@@ -50,16 +49,16 @@ function main(){
   }
   // 그렇지 않다면 단순 복사한다.
   NCP(KIT_PATH, CWD, err => {
-    if(err) return JJLog.error(err);
+    if(err) return console.error(err);
     if(!FS.existsSync(`${CWD}/dist`)){
       FS.mkdirSync(`${CWD}/dist`);
     }
     FS.mkdirSync(`${CWD}/dist/libs`);
-    JJLog.success(`The kit ${kit} has been copied to ${CWD}!`);
+    console.info(`The kit ${kit} has been copied to ${CWD}!`);
     
-    JJLog.info("You can use these commands to install and build completely:");
-    JJLog.info("\t> yarn run settle");
-    JJLog.info("\t> yarn start");
+    console.info("You can use these commands to install and build completely:");
+    console.info("\t> yarn run settle");
+    console.info("\t> yarn start");
   });
 }
 function merge(PATH, sub = ""){
@@ -73,15 +72,15 @@ function merge(PATH, sub = ""){
 
     if(FS.statSync(pathSrc).isDirectory()){
       if(!FS.existsSync(pathDest)){
-        JJLog.log(`New directory: ${pathDest}`);
+        console.log(`New directory: ${pathDest}`);
         FS.mkdirSync(pathDest);
       }
       merge(PATH, `${sub}/${v}`);
       continue;
     }
-    JJLog.log("Compare two files:", pathSrc, pathDest);
+    console.log("Compare two files:", pathSrc, pathDest);
     if(!FS.existsSync(pathDest)){
-      JJLog.log(`New file: ${pathDest}`);
+      console.log(`New file: ${pathDest}`);
       FS.copyFileSync(pathSrc, pathDest);
       continue;
     }

@@ -1,9 +1,9 @@
 import Express = require("express");
 import ALP = require("accept-language-parser");
-import Logger from "jj-log";
 
 import { SETTINGS, getProjectData } from "./System";
-import { reduceToTable } from "./Utility";
+import { reduceToTable, resolveLanguageArguments } from "./Utility";
+import { Logger } from "./Logger";
 
 const LANGUAGE_SUPPORT = Object.keys(SETTINGS['language-support']);
 let LANGUAGES:Table<string>;
@@ -12,9 +12,13 @@ let LANGUAGES:Table<string>;
  * 문자열표에서 문자열을 얻어 반환한다.
  *
  * @param key 식별자.
+ * @param args 추가 정보.
  */
-export function L(key:string):string{
-  return LANGUAGES[key];
+export function L(key:string, ...args:any[]):string{
+  return args.length
+    ? resolveLanguageArguments(LANGUAGES[key], ...args)
+    : LANGUAGES[key]
+  ;
 }
 /**
  * 언어 파일에서 주어진 식별자와 대응되는 문자열표를 반환한다.
@@ -74,5 +78,5 @@ export function loadLanguages():void{
     }
   }
   LANGUAGES = R;
-  Logger.info("Languages has been updated.");
+  Logger.info("Languages has been updated.").out();
 }

@@ -4,13 +4,18 @@ const Path = require("path");
 const REGEXP_PAGE = /^([A-Z]\w+?)+$/;
 const SASS_TABLE = {};
 const ROOTS = {
-  front: Path.resolve(__dirname, "../src/front")
+  front: Path.resolve(__dirname, "../../src/front")
 };
 
-exports.WP_ENTRIES = FS.readdirSync(Path.resolve(__dirname, "../src/front"))
+exports.SETTINGS = Object.assign(
+  {},
+  require("../../data/settings.json"),
+  require("../../data/settings.dev.json")
+);
+exports.WP_ENTRIES = FS.readdirSync(Path.resolve(__dirname, "../../src/front"))
   .filter(v => REGEXP_PAGE.test(v))
   .reduce((pv, v) => {
-    pv[v] = Path.resolve(__dirname, `../src/front/${v}/index.tsx`);
+    pv[v] = Path.resolve(__dirname, `../../src/front/${v}/index.tsx`);
     return pv;
   }, {})
 ;

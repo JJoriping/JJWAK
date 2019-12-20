@@ -1,17 +1,16 @@
 const FS = require("fs");
-const Logger = require("jj-log").default;
 
 const NAME = process.argv[2];
 
 if(!NAME){
-  Logger.info("Usage: node tools/entity.js NAME");
+  console.info("Usage: node tools/entity.js NAME");
   process.exit();
 }
 
 // TS 복사
 FS.writeFileSync(
   `./src/back/models/${NAME}.ts`,
-  FS.readFileSync("./tools/entity-template.ts.proto").toString().replace(/%%NAME%%/g, NAME)
+  FS.readFileSync("./tools/lib/entity-template.ts.proto").toString().replace(/%%NAME%%/g, NAME)
 );
 // Database.ts 수정
 FS.writeFileSync(

@@ -1,9 +1,13 @@
 {
   "main": "dist/Main.js",
   "scripts": {
-    "start": "node dist/Main",
-    "settle": "CALL ./tools/install.cmd --pre && yarn && CALL ./tools/install.cmd && CALL ./tools/build.cmd",
-    "build": "CALL ./tools/build.cmd"
+    "start": "node ./dist/Main.js",
+    "settle": "node ./tools/check-global.js && yarn install && node ./tools/setup.js && node ./tools/check-front.js && yarn build",
+    "build": "yarn run build-back && webpack && node ./tools/build-scss.js && node ./tools/lib/front-lang-loader.js !",
+    "build-back": "webpack -p --config ./tools/webpack.back.config.js",
+    "build-front": "node ./tools/front.js !",
+    "watch-back": "webpack -d -w --config ./tools/webpack.back.config.js",
+    "watch-front": "node ./tools/front.js"
   },
   "globalDependencies": [
     "typescript",
@@ -21,7 +25,6 @@
     "accept-language-parser": "^1.5.0",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
-    "jj-log": "bitbucket:jjo_kr/jj-log",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "spdy": "^3.4.7",
@@ -35,13 +38,10 @@
     "@types/react": "^16.0.40",
     "@types/react-dom": "^16.0.4",
     "@types/spdy": "^3.4.4",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.6.1",
     "node-sass": "^4.8.3",
-    "ssh2-promise": "^0.1.4",
-    "ts-loader": "^4.1.0",
-    "typescript": "^3.3.1",
+    "readline": "^1.3.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.3",
     "webpack-node-externals": "^1.7.2"
   },
   "engines": {

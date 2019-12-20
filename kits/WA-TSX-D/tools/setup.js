@@ -3,12 +3,11 @@ const ReadLine = require("readline").createInterface({
   input: process.stdin,
   output: process.stdout
 });
-const Logger = require("jj-log").default;
 const options = {};
 const cwd = process.cwd();
 
-Logger.success("*** JJWAK WA-TSX Setup ***");
-Logger.log("Please introduce your application!", "(Ctrl+C to abort)");
+console.log("*** JJWAK WA-TSX Setup ***");
+console.log("Please introduce your application!", "(Ctrl+C to abort)");
 read("Name", cwd.slice(cwd.lastIndexOf("\\") + 1).toLowerCase().replace(/\W/g, "-"))
   .then(() => read("Version", "1.0.0"))
   .then(() => read("Author"))
@@ -21,15 +20,15 @@ read("Name", cwd.slice(cwd.lastIndexOf("\\") + 1).toLowerCase().replace(/\W/g, "
   Object.assign(options, package);
 
   FS.writeFile("./package.json", JSON.stringify(options, null, "  "), err => {
-    if(err) return Logger.error(err);
-    Logger.success("Setup");
+    if(err) return console.error(err);
+    console.info("Setup success");
     process.exit();
   });
 });
 
 function read(name, def, field = name.toLowerCase()){
   return new Promise((res, rej) => {
-    Logger.info(`%F_YELLOW%${name}%NORMAL%${def ? ` (${def})` : ""}: `);
+    console.info(`${name}${def ? ` (${def})` : ""}: `);
     process.stdout.write("> ");
     ReadLine.once('line', input => {
       options[field] = input || def || undefined;
