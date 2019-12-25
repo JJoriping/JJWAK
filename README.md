@@ -39,6 +39,7 @@ Cross-platform Integrated Web Application Development Kit
 | check-front.js              | checks whether required front-end libraries are available and installs if needed. |
 | check-global.js             | checks whether required global libraries are available and installs if needed. |
 | page.js                     | creates a page and makes it ready to be used. |
+| schema.js                   | creates a JSON schema file from a given type described in `Schema.d.ts`. |
 | setup.js                    | is an interactive script for setting `package.json`. |
 | webpack.back.config.js      | is an internal script for building the back-end modules. |
 ## Modules used
