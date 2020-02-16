@@ -64,7 +64,7 @@ function main(){
 function merge(PATH, sub = ""){
   const dir = `${PATH}${sub}`;
 
-  JJLog.info(`Merging in ${dir}`);
+  console.info(`Merging in ${dir}`);
   for(const v of FS.readdirSync(dir)){
     const pathSrc = `${dir}/${v}`;
     const pathDest = `${CWD}${sub}/${v}`;

@@ -1,10 +1,21 @@
 import Express = require("express");
+import React = require("react");
+import ReactDOMServer = require("react-dom/server");
 
-import { L } from "./Language";
+import { L, getLanguageTable } from "./Language";
 import { getProjectData, PACKAGE } from "./System";
+import { CLOTHES } from "./Clothes";
+import { Root } from "front/ReactBootstrap";
+import { setTable } from "front/@global/Language";
 
 const HTML_TEMPLATE = getProjectData("template.html").toString();
+
+const READER_SSR = createReader("SSR");
 const READER_NEST = /("?)\/\*\{(.+?)\}\*\/\1/g;
+
+function createReader(key:string):RegExp{
+  return new RegExp(`("?)/\\* %%${key}%% \\*/\\1`, "g");
+}
 
 /**
  * 주어진 페이지를 렌더하는 Express 끝점 클로저를 반환한다.
@@ -41,11 +52,12 @@ export function Engine<T extends JJWAK.Page.Type>(
   $:JJWAK.Page.Props<T>,
   callback:(err:any, content?:string) => void
 ):void{
-  const REACT_SUFFIX = process.env['NODE_ENV'] === "production"
-    ? "production.min"
-    : "development"
+  const REACT_SUFFIX = CLOTHES.development
+    ? "development"
+    : "production.min"
   ;
   const KEY = `${$.locale}/${$.page}`;
+  const SSR = $.ssr;
 
   $.title = L(`${KEY}#title`, ...($.metadata.titleArgs || []));
   $.version = PACKAGE['version'];
@@ -54,10 +66,21 @@ export function Engine<T extends JJWAK.Page.Type>(
   delete ($ as any)['cache'];
   delete ($ as any)['_locals'];
 
+  if(SSR) setTable(getLanguageTable($.locale, $.page));
+  const CLIENT_SETTINGS:Partial<JJWAK.ClientSettings> = {};
+  
   const HTML = HTML_TEMPLATE
+    .replace(READER_SSR, SSR
+      ? ReactDOMServer.renderToString(React.createElement(
+        Root,
+        $,
+        React.createElement(require(`front/${$.page}/index.tsx`).default, $)
+      ))
+      : ""
+    )
     .replace(READER_NEST, (v, p1, p2) => String(eval(p2)))
   ;
   // NOTE never used 오류 회피
-  void REACT_SUFFIX;
+  void CLIENT_SETTINGS, REACT_SUFFIX;
   callback(null, HTML);
 }

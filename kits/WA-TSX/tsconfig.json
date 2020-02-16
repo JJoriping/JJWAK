@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es2018",
+    "target": "es2017",
     "jsx": "react",
     "baseUrl": "./src",
     "sourceMap": true,
@@ -10,5 +10,8 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noImplicitReturns": true
-  }
+  },
+  "include": [
+    "./src"
+  ]
 }

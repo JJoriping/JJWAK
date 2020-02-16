@@ -5,7 +5,7 @@ import { SETTINGS, getProjectData } from "./System";
 import { reduceToTable, resolveLanguageArguments } from "./Utility";
 import { Logger } from "./Logger";
 
-const LANGUAGE_SUPPORT = Object.keys(SETTINGS['language-support']);
+const LANGUAGE_SUPPORT = Object.keys(SETTINGS.application['language-support']);
 let LANGUAGES:Table<string>;
 
 /**
@@ -35,9 +35,9 @@ export function getLanguageTable(locale:string, page:string):Table<string>{
  * @param req Express 요청 객체.
  */
 export function getLocale(req:Express.Request):string{
-  let R:string = req.cookies['dds.locale'];
+  let R:string = req.cookies['jjwak.locale'];
 
-  if(!LANGUAGES || !SETTINGS['language-support'][R]){
+  if(!LANGUAGES || !LANGUAGES[R]){
     R = ALP.pick(LANGUAGE_SUPPORT, String(req.headers['accept-language'])) || LANGUAGE_SUPPORT[0];
   }
   return R;

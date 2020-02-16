@@ -1,12 +1,13 @@
 {
   "$schema": "./settings.schema.json",
-  "application": {},
+  "application": {
+    "language-support": {
+      "ko-KR": "한국어"
+    }
+  },
   "cookie": {
     "age": 604800000,
     "secret": "jjwak"
-  },
-  "language-support": {
-    "ko-KR": "한국어"
   },
   "log": {
     "directory": "logs",

@@ -18,6 +18,7 @@ export default function(App:Express.Application):void{
   App.use("/media", Express.static(Path.resolve(__dirname, "./media"), { maxAge: SETTINGS.cookie.age }), send404);
   App.use("/pages", Express.static(Path.resolve(__dirname, "./pages"), { maxAge: SETTINGS.cookie.age }), send404);
   App.use("/strings", Express.static(Path.resolve(__dirname, "./strings"), { maxAge: SETTINGS.cookie.age }), send404);
+  App.use("/constants.js", (req, res) => res.sendFile(Path.resolve(__dirname, "./constants.js")));
   App.use("/favicon.ico", (req, res) => res.sendFile(Path.resolve(__dirname, "./favicon.ico")));
   App.use((req, res, next) => {
     req.address = req.ip || req.ips.join();

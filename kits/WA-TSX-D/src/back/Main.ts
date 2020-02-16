@@ -1,12 +1,13 @@
 import Express = require("express");
 import Spdy = require("spdy");
 
+import { CLOTHES } from "./utils/Clothes";
 import DB from "./utils/Database";
 import ExpressAgent from "./utils/ExpressAgent";
 import { loadLanguages } from "./utils/Language";
-import Route from "./utils/Route";
-import { DEVELOPMENT, getProjectData, loadEndpoints, SETTINGS } from "./utils/System";
 import { Logger } from "./utils/Logger";
+import Route from "./utils/Route";
+import { getProjectData, SETTINGS, writeClientConstants } from "./utils/System";
 
 const SPDY_OPTIONS:Spdy.server.ServerOptions = SETTINGS['https'] ? {
   key: getProjectData(SETTINGS['https']['key']),
@@ -14,12 +15,13 @@ const SPDY_OPTIONS:Spdy.server.ServerOptions = SETTINGS['https'] ? {
 } : null;
 const App = Express();
 
-if(DEVELOPMENT){
+if(CLOTHES.development){
   Logger.warning("Development").out();
 }
-loadLanguages();
-loadEndpoints();
-DB.initialize().then(() => {
+Logger.initialize("web").then(async () => {
+  await DB.initialize();
+  loadLanguages();
+  writeClientConstants();
   ExpressAgent(App);
   Route(App);
   if(SPDY_OPTIONS){

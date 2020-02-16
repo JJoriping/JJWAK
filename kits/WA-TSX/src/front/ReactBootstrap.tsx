@@ -4,6 +4,7 @@ import ReactDOM = require("react-dom");
 import Footer from "./@global/Footer";
 import Header from "./@global/Header";
 import L from "./@global/Language";
+import { PROPS } from "./@global/Utility";
 import JJorm from "./JJorm";
 
 type State = {
@@ -11,10 +12,9 @@ type State = {
 };
 export default function Bind(TargetClass:any):void{
   const $root = document.createElement("main");
-  const props:JJWAK.Page.Props<any> = "/*{JSON.stringify($)}*/" as any;
 
-  ReactDOM.render(<Root {...props}>
-    {React.createElement(TargetClass, props)}
+  ReactDOM.render(<Root {...PROPS}>
+    {React.createElement(TargetClass, PROPS)}
   </Root>, $root);
   document.body.appendChild($root);
 }

@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width" />
     <title>/*{$.title}*/</title>
     <link rel="stylesheet" href="/libs/font-awesome/css/all.min.css" />
-    <link rel="stylesheet" href="/pages//*{$.page}*/.css" />
+    <link rel="stylesheet" href="/pages//*{$.page}*/.css?v=/*{$.version}*/" />
     <script type="text/javascript">Object['FRONT']=true;window.__PROPS="/*{JSON.stringify($)}*/"</script>
     <script type="text/javascript" src="/libs/react/react./*{REACT_SUFFIX}*/.js"></script>
     <script type="text/javascript" src="/libs/react-dom/react-dom./*{REACT_SUFFIX}*/.js"></script>
   </head>
   <body>
-    <section id="stage"></section>
-    <script type="text/javascript" src="/strings//*{$.locale}*/./*{$.page}*/.js"></script>
-    <script type="text/javascript" src="/pages//*{$.page}*/.js"></script>
+    <section id="stage">/* %%SSR%% */</section>
+    <script type="text/javascript" src="/constants.js"></script>
+    <script type="text/javascript">Object.assign(window.__CLIENT_SETTINGS, "/*{JSON.stringify(CLIENT_SETTINGS)}*/");</script>
+    <script type="text/javascript" src="/strings//*{$.locale}*/./*{$.page}*/.js?v=/*{$.version}*/"></script>
+    <script type="text/javascript" src="/pages//*{$.page}*/.js?v=/*{$.version}*/"></script>
   </body>
 </html>

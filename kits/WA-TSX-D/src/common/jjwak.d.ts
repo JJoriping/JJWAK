@@ -12,16 +12,20 @@ declare namespace JJWAK{
       page:T;
       path:string;
       title:string;
-
+      
       data:JJWAK.Page.DataTable[T];
       version:string;
 
       metadata:JJWAK.Page.Metadata;
+      ssr:boolean;
     }
   }
   type ActionReceiverTable = Partial<{
     'example-action': Action
   }>;
+  type ClientSettings = Pick<Schema.Settings['application'],
+    | 'language-support'
+  >&{};
   type Clothes = {
     /**
      * `--dev`
@@ -46,31 +50,5 @@ declare namespace JJWAK{
      * 시작 시점과는 관계 없이 0시 정각, 1시 정각, …에 맞추어 호출된다.
      */
     'punctual': boolean
-  };
-  type Settings = {
-    'application': {},
-    'cookie': {
-      'age': number,
-      'secret': string
-    },
-    'database': {
-      'host': string,
-      'port': number,
-      'username': string,
-      'password': string,
-      'database': string,
-      'connectTimeout': number,
-      'maxQueryExecutionTime': number
-    },
-    'https': {
-      'key': string,
-      'cert': string
-    },
-    'language-support': Table<string>,
-    'log': {
-      'directory': string,
-      'interval': number
-    },
-    'port': number,
   };
 }

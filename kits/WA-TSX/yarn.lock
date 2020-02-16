@@ -51,7 +51,7 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
-"@types/json-schema@^7.0.3":
+"@types/json-schema@^7.0.4":
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.4.tgz#38fd73ddfd9b55abb1e1b2ed578cb55bd7b7d339"
   integrity sha512-8+KAKzEvSUdeo+kmqnKrqgeE+LcA0tjYWFY7RPProVYwnqDjukzO+3b6dLD56rYX5TdWejnEOLJYOIeh4CXKuA==
@@ -357,10 +357,10 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@~4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-4.0.1.tgz#b67622721785993182e807f4883633e6401ba53c"
-  integrity sha512-IPF4ouhCP+qdlcmCedhxX4xiGBPyigb8v5NeUp+0LyhwLgxMqyp3S0vl7TAPfS/hiP7FC3caI/PB9lTmP8r1NA==
+commander@~4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-4.1.1.tgz#9fd602bd936294e9e9ef46a3f4d6964044b18068"
+  integrity sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==
 
 concat-map@0.0.1:
   version "0.0.1"
@@ -1862,16 +1862,16 @@ trim-newlines@^1.0.0:
   dependencies:
     glob "^7.1.2"
 
-ts-json-schema-generator@^0.58.1:
-  version "0.58.1"
-  resolved "https://registry.yarnpkg.com/ts-json-schema-generator/-/ts-json-schema-generator-0.58.1.tgz#41bce930e53422723646f0b037f33b1b4c8a42d5"
-  integrity sha512-v4shrlxAYtEfeq+1Hfr57pljGv2OMHV8oZ5NwbaWHHGOfXDuDAPn9Cf7HJU4+7ls7UqUPZiyRpKQdRV+GhuSuQ==
+ts-json-schema-generator@^0.60.0:
+  version "0.60.0"
+  resolved "https://registry.yarnpkg.com/ts-json-schema-generator/-/ts-json-schema-generator-0.60.0.tgz#7d84e5c8303012bc4788e13b1ef45ce0ef78a4c8"
+  integrity sha512-hXSlkb2kID3WJq9CHrnIxlLdIiGuRvrajJT8mQEaHI8xWNk5Sy+wRXvWlHRUn64RpUR9dyydI4d33aKb/CXssw==
   dependencies:
-    "@types/json-schema" "^7.0.3"
-    commander "~4.0.1"
+    "@types/json-schema" "^7.0.4"
+    commander "~4.1.1"
     glob "~7.1.6"
     json-stable-stringify "^1.0.1"
-    typescript "~3.7.3"
+    typescript "~3.7.5"
 
 ts-loader@^6.2.1:
   version "6.2.1"
@@ -1909,10 +1909,10 @@ typescript@^3.7.3:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.3.tgz#b36840668a16458a7025b9eabfad11b66ab85c69"
   integrity sha512-Mcr/Qk7hXqFBXMN7p7Lusj1ktCBydylfQM/FZCk5glCNQJrCUKPkMHdo9R0MTFWsC/4kPFvDS0fDPvukfCkFsw==
 
-typescript@~3.7.3:
-  version "3.7.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.4.tgz#1743a5ec5fef6a1fa9f3e4708e33c81c73876c19"
-  integrity sha512-A25xv5XCtarLwXpcDNZzCGvW2D1S3/bACratYBx2sax8PefsFhlYmkQicKHvpYflFS8if4zne5zT5kpJ7pzuvw==
+typescript@~3.7.5:
+  version "3.7.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.5.tgz#0692e21f65fd4108b9330238aac11dd2e177a1ae"
+  integrity sha512-/P5lkRXkWHNAbcJIiHPfRoKqyd7bsyCma1hZNUGfn20qm64T6ZBlrzprymeu918H+mB/0rIg2gGK/BXkhhYgBw==
 
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"

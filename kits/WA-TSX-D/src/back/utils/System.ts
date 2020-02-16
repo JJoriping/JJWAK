@@ -1,25 +1,18 @@
 import FS = require("fs");
 import Path = require("path");
 
-import { reduceToTable, TIMEZONE_OFFSET } from "./Utility";
+import { TIMEZONE_OFFSET, pick, merge } from "./Utility";
 import { Logger } from "./Logger";
+import { CLOTHES } from "./Clothes";
 
-/**
- * 개발 플래그 설정 여부.
- */
-export const DEVELOPMENT = process.argv.includes("--dev");
-/**
- * `data/endpoints.json` 파일 객체.
- */
-export const ENDPOINTS:Table<any> = {};
 /**
  * `data/settings.json` 파일 객체.
  */
-export const SETTINGS:JJWAK.Settings = Object.assign(
+export const SETTINGS:Schema.Settings = merge(
   {},
   JSON.parse(getProjectData("settings.json").toString()),
-  DEVELOPMENT ? JSON.parse(getProjectData("settings.dev.json").toString()) : {}
-);
+  CLOTHES.development ? JSON.parse(getProjectData("settings.dev.json").toString()) : {}
+) as any;
 /**
  * `package.json` 파일 객체.
  */
@@ -56,25 +49,6 @@ export function setProjectData(path:string, data:any):Promise<void>{
   });
 }
 /**
- * 프로젝트 데이터 폴더 내의 종점 파일을 새로 읽어 가공 후 메모리에 올린다.
- * 
- * 메모리에 올려진 문자열표는 페이지 렌더 시 XHR 종점 목록으로 포함된다.
- */
-export function loadEndpoints():void{
-  const R:Table<any> = {};
-  const endpoints:Table<string[]> = JSON.parse(getProjectData("endpoints.json").toString());
-  const $items = endpoints['$items'] as Table<any>;
-  const $global = reduceToTable(endpoints['$global'], v => $items[v]);
-  
-  for(const k in endpoints){
-    if(k.startsWith("$")){
-      continue;
-    }
-    R[k] = Object.assign({}, $global, reduceToTable(endpoints[k], v => $items[v]));
-  }
-  Object.assign(ENDPOINTS, R);
-}
-/**
  * 주어진 함수가 주기적으로 호출되도록 한다.
  *
  * @param callback 매번 호출할 함수.
@@ -100,4 +74,19 @@ export function schedule(
   }else{
     global.setInterval(callback, interval);
   }
+}
+/**
+ * 외부에서 `/constants.js`로 접속할 수 있는 클라이언트 상수 파일을 만든다.
+ *
+ * 이 파일에는 `data/settings.json` 파일의 `application` 객체 일부가 들어가 있다.
+ */
+export function writeClientConstants():void{
+  const data = JSON.stringify(pick(
+    SETTINGS.application,
+    'language-support'
+  ));
+  FS.writeFileSync(
+    Path.resolve(__dirname, "constants.js"),
+    `window.__CLIENT_SETTINGS=${data}`
+  );
 }

@@ -1,3 +1,10 @@
+import { FRONT } from "back/utils/Utility";
+
+/**
+ * 현재 페이지 최상위 컴포넌트의 속성 객체.
+ */
+export const PROPS:JJWAK.Page.Props<any> = FRONT && eval("window['__PROPS']");
+
 /**
  * HTML 공통 속성 `className`의 값에 적합한 문자열을 반환한다.
  *
