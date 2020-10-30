@@ -15,23 +15,18 @@ function main(){
   console.info(
     "Which kit do you want?\n",
     "(1) NA-TS    for Node.js with TypeScript\n",
-    "(2) WA-TSX   for Web with TypeScript & React\n",
-    "(3) WA-TSX-D for Web with TypeScript & React including Database"
+    "(2) WA-TSX-D for Web with TypeScript & React including Database"
   );
   switch(ReadLine.questionInt()){
     case 1:
       kit = "NA-TS";
       break;
     case 2:
-      kit = "WA-TSX";
-      break;
-    case 3:
       kit = "WA-TSX-D";
       break;
     default:
       console.error("Type a number above!");
       process.exit();
-      return;
   }
   const KIT_PATH = `${__dirname}/kits/${kit}`;
 

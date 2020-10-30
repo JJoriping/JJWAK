@@ -1,4 +1,4 @@
-# JJWAK v1.6
+# JJWAK v1.7
 Cross-platform Integrated Web Application Development Kit
 
 ## Prerequisite
@@ -12,7 +12,7 @@ Cross-platform Integrated Web Application Development Kit
 1. `yarn run settle`
 1. `yarn start`
 ## Development
-### WA-TSX
+### WA-TSX-D
 - `yarn run build-back`: Build back-end modules
 - `yarn run build-front`: Build front-end modules
 - `yarn run watch-back`: Watch back-end modules
@@ -21,14 +21,11 @@ Cross-platform Integrated Web Application Development Kit
   - It creates a new directory and files from:
     - `./tools/lib/page-template.scss.proto`
     - `./tools/lib/page-template.tsx.proto`
-### WA-TSX-D
-- This includes all features of WA-TSX.
 - `node ./tools/entity.js name`: Create an entity named `name`
   - It creates a file from `./tools/lib/entity-template.ts.proto`
   - It modifies the file `./src/back/utils/Database.ts`, especially next to the comments `// AUTO ...`
 ## Kits available
 - **NA-TS**: Node.js Application with TypeScript
-- **WA-TSX**: Web Application with TypeScript & React
 - **WA-TSX-D**: Web Application with TypeScript & React including Database Connection Module
 ## Tools
 | Name                        | Explanation |

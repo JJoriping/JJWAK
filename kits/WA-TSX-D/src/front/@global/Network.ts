@@ -1,7 +1,8 @@
+import { CLIENT_SETTINGS, isEmpty } from "back/utils/Utility";
+
 type XHROptions = {
   'method': "GET"|"POST",
   'url': string,
-  'binary'?: boolean,
   'data'?: string|ArrayBuffer,
   'headers'?: Table<string>
 };
@@ -104,13 +105,15 @@ export class HRef{
   }
 }
 export class XHR{
+  private static readonly REQUEST_URL_TABLE = CLIENT_SETTINGS.endpoints;
+  private static readonly REGEXP_ARGS = /\{#(\d+?)\}/g;
   private static table:Table<XHR> = {};
   private static id:number = 0;
 
-  public static send<T>(
+  private static send<T extends XHR.Type>(
     options:XHROptions,
     onProgress?:ProgressEventHandler
-  ):Promise<XHRResponse<T>>{
+  ):Promise<XHRResponse<XHR.ResponseTable[T]>>{
     return new Promise((res, rej) => {
       const xhr = new XHR(options, (status, result) => {
         const R:XHRResponse<any> = {
@@ -130,19 +133,50 @@ export class XHR{
       }, onProgress);
     });
   }
-  public static get<T>(url:string):Promise<XHRResponse<T>>{
-    return XHR.send({
+  private static get<T extends XHR.Type>(
+    url:string,
+    data?:XHR.RequestTable[T],
+    onProgress?:ProgressEventHandler
+  ):Promise<XHRResponse<XHR.ResponseTable[T]>>{
+    if(data && !isEmpty(data)){
+      url = url + HRef.stringifyURL(data, true);
+    }
+    return XHR.send<T>({
       method: "GET",
       url
-    });
+    }, onProgress);
   }
-  public static post<T>(url:string, data:Table<any>):Promise<XHRResponse<T>>{
-    return XHR.send({
+  private static post<T extends XHR.Type>(
+    url:string,
+    data?:XHR.RequestTable[T],
+    onProgress?:ProgressEventHandler
+  ):Promise<XHRResponse<XHR.ResponseTable[T]>>{
+    const chunk:any = (data as any) instanceof ArrayBuffer
+      ? { data, headers: { 'Content-Type': "application/octet-stream" } }
+      : { data: JSON.stringify(data), headers: { 'Content-Type': "application/json;charset=utf-8" } }
+    ;
+    return XHR.send<T>({
       method: "POST",
       url,
-      headers: { 'Content-Type': "application/json;charset=utf-8" },
-      data: JSON.stringify(data)
-    });
+      ...chunk
+    }, onProgress);
+  }
+  public static go<T extends XHR.Type>(
+    type:T,
+    args?:any[],
+    data?:XHR.RequestTable[T],
+    onProgress?:ProgressEventHandler
+  ):Promise<XHRResponse<XHR.ResponseTable[T]>>{
+    if(!XHR.REQUEST_URL_TABLE.hasOwnProperty(type)){
+      throw Error(`알 수 없는 유형: ${type}`);
+    }
+    const [ method, _url ] = XHR.REQUEST_URL_TABLE[type];
+    const url = _url.replace(XHR.REGEXP_ARGS, (_, p1) => args[p1]);
+
+    if(method === "GET"){
+      return XHR.get(url, data, onProgress);
+    }
+    return XHR.post(url, data, onProgress);
   }
   public static progressByRate(ontoProgress:(rate:number) => boolean):ProgressEventHandler{
     return (e, req) => {
@@ -165,9 +199,6 @@ export class XHR{
     this.source.addEventListener('readystatechange', this.getOnReadyStateChangeClosure(res));
     onProgress && this.source.upload.addEventListener('progress', e => onProgress(e, this.source));
 
-    if(options.binary){
-      this.source.responseType = "blob";
-    }
     this.source.withCredentials = true;
     this.source.setRequestHeader('X-Requested-With', "XMLHttpRequest");
     this.source.send(options.data);
@@ -180,7 +211,7 @@ export class XHR{
       const contentType:string = this.source.getResponseHeader('Content-Type');
       let data:string|Table<any> = this.source.response;
 
-      if(contentType && contentType.startsWith("application/json")){
+      if(contentType?.startsWith("application/json")){
         data = JSON.parse(String(data));
       }
       res(this.source.status, data);

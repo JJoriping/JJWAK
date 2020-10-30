@@ -1,9 +1,13 @@
 import { DateUnit } from "./enums/DateUnit";
 
 /**
+ * 클라이언트 설정 객체.
+ */
+export const CLIENT_SETTINGS:JJWAK.ClientSettings = 'FRONT' in Object && eval("window.__CLIENT_SETTINGS");
+/**
  * 프론트엔드 여부.
  */
-export const FRONT:boolean = !Boolean("/*{APP['false-if-front']}*/");
+export const FRONT:boolean = Boolean(CLIENT_SETTINGS);
 /**
  * 유효한 단일 샤프 인자의 집합.
  */
@@ -23,6 +27,18 @@ export function cut(text:string, limit:number):string{
     ? text.slice(0, limit - 1) + "…"
     : text
   ;
+}
+/**
+ * 대상 객체가 비어 있는지 확인해 반환한다.
+ *
+ * @param object 대상 객체.
+ * @param includeNullity `true`인 경우 값이 `null`이나 `undefined`인 경우도 비어 있는 것으로 본다.
+ */
+export function isEmpty(object:Table<any>, includeNullity?:boolean):boolean{
+  return !object || (includeNullity
+    ? Object.keys(object).filter(k => object[k] !== null && object[k] !== undefined).length === 0
+    : Object.keys(object).length === 0
+  );
 }
 /**
  * 배열을 생성해 반환한다.

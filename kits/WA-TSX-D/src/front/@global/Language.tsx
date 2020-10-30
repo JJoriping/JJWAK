@@ -28,7 +28,7 @@ let TABLE:Table<string> = "/*{'window.__LANGUAGE'}*/" as any;
  * @param table 새로운 문자열표.
  */
 export const setTable = (table:Table<string>) => {
-  TABLE = Object.assign({}, table);
+  TABLE = { ...table };
 };
 /**
  * 문자열표를 활용하는 프론트엔드 유틸리티 클래스.

@@ -1,8 +1,0 @@
-.cache/
-.vscode/
-
-node_modules/
-
-dist/*
-!dist/media/
-tools/publish-cache.json

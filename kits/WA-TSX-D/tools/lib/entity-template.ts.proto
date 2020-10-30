@@ -1,9 +1,6 @@
 import TypeORM = require("typeorm");
 
-@TypeORM.Entity({ name: "<TABLE NAME>" })
+@TypeORM.Entity({ name: "%%TABLE%%" })
 export default class %%NAME%%{
-  @TypeORM.PrimaryColumn({ name: "", type: "" })
-  public column1:any;
-  @TypeORM.Column({ name: "", type: "" })
-  public column2:any;
+%%COLUMNS%%
 }

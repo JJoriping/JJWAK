@@ -4,8 +4,9 @@ import { SETTINGS } from "./System";
 import { CLOTHES } from "./Clothes";
 import { Iterator } from "./Utility";
 
-// AUTO DB-IMPORT
+//@jjwak-auto DB_IMPORT {
 import Example from "back/models/Example";
+//@jjwak-auto DB_IMPORT }
 import { Logger } from "./Logger";
 
 export default class DB{
@@ -16,8 +17,9 @@ export default class DB{
   }
   public static async initialize():Promise<void>{
     const entities:Function[] = [
-      // AUTO DB-ENTITY
+      //@jjwak-auto DB_ENTITY {
       Example
+      //@jjwak-auto DB_ENTITY }
     ];
 
     DB.agent = await TypeORM.createConnection({

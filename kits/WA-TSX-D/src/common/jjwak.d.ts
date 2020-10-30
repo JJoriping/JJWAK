@@ -2,7 +2,9 @@ declare namespace JJWAK{
   namespace Page{
     type Type = keyof JJWAK.Page.DataTable;
     type DataTable = {
+      //@jjwak-auto PAGE {
       'Index': never
+      //@jjwak-auto PAGE }
     };
     type Metadata = {
       'titleArgs'?: string[]
@@ -16,12 +18,18 @@ declare namespace JJWAK{
       data:JJWAK.Page.DataTable[T];
       version:string;
 
-      metadata:JJWAK.Page.Metadata;
+      metadata?:JJWAK.Page.Metadata;
+      ssr?:boolean;
     }
   }
   type ActionReceiverTable = Partial<{
     'example-action': Action
   }>;
+  type ClientSettings = Pick<Schema.Settings['application'],
+    | 'language-support'
+  >&{
+    'endpoints': { [key in XHR.Type ]: [ "GET"|"POST", string ] }
+  };
   type Clothes = {
     /**
      * `--dev`
@@ -73,4 +81,7 @@ declare namespace JJWAK{
     },
     'port': number,
   };
+}
+declare namespace XHR{
+  type Type = keyof XHR.RequestTable|keyof XHR.ResponseTable;
 }

@@ -1,0 +1,11 @@
+import React = require("react");
+
+import { DialogBody } from "front/@block/Dialog";
+
+export class %%PASCAL_NAME%% extends DialogBody<'%%NAME%%'>{
+  public static readonly KEY = "%%NAME%%";
+
+  render():React.ReactNode{
+    return null;
+  }
+}

@@ -3,7 +3,6 @@ const Path = require("path");
 
 const { frontDependencies } = require("../package.json");
 const PATHS = [
-  Path.resolve(__dirname, "../dist/libs"),
   Path.resolve(__dirname, "../dist/logs"),
   Path.resolve(__dirname, "../dist/pages"),
   Path.resolve(__dirname, "../dist/strings")
