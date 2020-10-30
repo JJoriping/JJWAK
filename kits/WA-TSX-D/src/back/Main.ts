@@ -5,7 +5,7 @@ import DB from "./utils/Database";
 import ExpressAgent from "./utils/ExpressAgent";
 import { loadLanguages } from "./utils/Language";
 import Route from "./utils/Route";
-import { DEVELOPMENT, getProjectData, loadEndpoints, SETTINGS } from "./utils/System";
+import { DEVELOPMENT, getProjectData, loadEndpoints, SETTINGS, writeClientConstants } from "./utils/System";
 import { Logger } from "./utils/Logger";
 
 const SPDY_OPTIONS:Spdy.server.ServerOptions = SETTINGS['https'] ? {
@@ -17,9 +17,10 @@ const App = Express();
 if(DEVELOPMENT){
   Logger.warning("Development").out();
 }
-loadLanguages();
-loadEndpoints();
 DB.initialize().then(() => {
+  loadLanguages();
+  loadEndpoints();
+  writeClientConstants();
   ExpressAgent(App);
   Route(App);
   if(SPDY_OPTIONS){

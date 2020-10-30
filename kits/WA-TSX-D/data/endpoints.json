@@ -1,6 +1,7 @@
 {
-  "$schema": "./endpoints.schema.json",
-  "$items": {},
+  "$items": {
+    "example": [ "GET", "/example" ]
+  },
   "$global": [],
   "Index": []
 }

@@ -1,0 +1,99 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "JJWAK - Add XHR",
+      "command": "node",
+      "args": [
+        "${workspaceFolder}/tools/tasks/xhr.js",
+        "${input:xhr-name}",
+        "${input:xhr-method}",
+        "${input:xhr-path}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "JJWAK - Add model",
+      "command": "node",
+      "args": [
+        "${workspaceFolder}/tools/tasks/entity.js",
+        "${input:model-name}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "JJWAK - Update schema",
+      "command": "node",
+      "args": [
+        "${workspaceFolder}/tools/tasks/schema.js",
+        "${input:schema-name}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "JJWAK - Add page",
+      "command": "node",
+      "args": [
+        "${workspaceFolder}/tools/tasks/page.js",
+        "${input:page-name}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "dialog-name",
+      "type": "promptString",
+      "description": "만들 대화 상자의 케밥 케이스 표현"
+    },
+    {
+      "id": "model-name",
+      "type": "promptString",
+      "description": "만들 모델의 이름"
+    },
+    {
+      "id": "page-name",
+      "type": "promptString",
+      "description": "만들 페이지의 이름"
+    },
+    {
+      "id": "schema-name",
+      "type": "promptString",
+      "description": "갱신할 스키마의 이름",
+      "default": "Settings"
+    },
+    {
+      "id": "xhr-method",
+      "type": "pickString",
+      "options": [
+        "GET",
+        "POST"
+      ],
+      "description": "만들 XHR 통신의 유형"
+    },
+    {
+      "id": "xhr-name",
+      "type": "promptString",
+      "description": "만들 XHR 통신의 이름"
+    },
+    {
+      "id": "xhr-path",
+      "type": "promptString",
+      "description": "만들 XHR 통신의 끝점"
+    }
+  ]
+}

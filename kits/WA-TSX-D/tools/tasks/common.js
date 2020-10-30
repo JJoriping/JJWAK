@@ -3,7 +3,7 @@ const FS = require("fs");
 const REGEXP_ORDER_PRIORITY = /^\$/;
 
 exports.iterateLine = function(buffer, iterator){
-  const lines = buffer.toString().split(/\r\n/g);
+  const lines = buffer.toString().split(/\r?\n/g);
   const newLines = [];
   
   for(let i = 0; i < lines.length; i++){
