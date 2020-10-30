@@ -50,6 +50,20 @@ export function Iterator<T = undefined>(length:number, fill?:T):T[]{
   return Array(length).fill(fill);
 }
 /**
+ * 대상 객체의 엔트리 일부만 갖는 객체를 반환한다.
+ *
+ * @param object 대상 객체.
+ * @param keys 선택할 키.
+ */
+export function pick<T, U extends keyof T>(object:T, ...keys:U[]):Pick<T, U>{
+  return keys.reduce<Pick<T, U>>((pv, v) => {
+    if(v in object){
+      pv[v] = object[v];
+    }
+    return pv;
+  }, {} as any);
+}
+/**
  * 배열을 주어진 함수에 따라 딕셔너리로 바꾸어 반환한다.
  *
  * @param target 대상 배열.

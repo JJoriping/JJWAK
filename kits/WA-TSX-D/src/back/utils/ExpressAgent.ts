@@ -1,9 +1,8 @@
-import Path = require("path");
 import Express = require("express");
 import BodyParser = require("body-parser");
 import CookieParser = require("cookie-parser");
 
-import { SETTINGS } from "./System";
+import { resolve, SETTINGS } from "./System";
 import * as ReactNest from "./ReactNest";
 import { getLocale } from "./Language";
 import { send404 } from "./Middleware";
@@ -12,13 +11,14 @@ import { Logger, LogStyle } from "./Logger";
 export default function(App:Express.Application):void{
   // JJWAK 기본
   App.engine("js", ReactNest.Engine);
-  App.set('views', Path.resolve(__dirname, "./pages"));
+  App.set('views', resolve("dist", "pages"));
   App.set('view engine', "js");
-  App.use("/libs", Express.static(Path.resolve(__dirname, "./libs"), { maxAge: SETTINGS.cookie.age }), send404);
-  App.use("/media", Express.static(Path.resolve(__dirname, "./media"), { maxAge: SETTINGS.cookie.age }), send404);
-  App.use("/pages", Express.static(Path.resolve(__dirname, "./pages"), { maxAge: SETTINGS.cookie.age }), send404);
-  App.use("/strings", Express.static(Path.resolve(__dirname, "./strings"), { maxAge: SETTINGS.cookie.age }), send404);
-  App.use("/favicon.ico", (req, res) => res.sendFile(Path.resolve(__dirname, "./favicon.ico")));
+  App.use("/libs", Express.static(resolve("dist", "libs")), send404);
+  App.use("/media", Express.static(resolve("dist", "media")), send404);
+  App.use("/pages", Express.static(resolve("dist", "pages")), send404);
+  App.use("/strings", Express.static(resolve("dist", "strings")), send404);
+  App.use("/constants.js", (req, res) => res.sendFile(resolve("dist", "constants.js")));
+  App.use("/favicon.ico", (req, res) => res.sendFile(resolve("dist", "favicon.ico")));
   App.use((req, res, next) => {
     req.address = req.ip || req.ips.join();
     if(req.xhr){

@@ -5,6 +5,10 @@ import { reduceToTable, TIMEZONE_OFFSET } from "./Utility";
 import { Logger } from "./Logger";
 
 /**
+ * 프로젝트 루트 경로.
+ */
+export const PROJECT_ROOT = Path.resolve(__dirname, "..");
+/**
  * 개발 플래그 설정 여부.
  */
 export const DEVELOPMENT = process.argv.includes("--dev");
@@ -75,6 +79,14 @@ export function loadEndpoints():void{
   Object.assign(ENDPOINTS, R);
 }
 /**
+ * 프로젝트 루트로부터 하위 경로를 구해 반환한다.
+ * 
+ * @param path 하위 경로 배열.
+ */
+export function resolve(...path:string[]):string{
+  return Path.resolve(PROJECT_ROOT, ...path);
+}
+/**
  * 주어진 함수가 주기적으로 호출되도록 한다.
  *
  * @param callback 매번 호출할 함수.
@@ -100,4 +112,18 @@ export function schedule(
   }else{
     global.setInterval(callback, interval);
   }
+}
+/**
+ * 외부에서 `/constants.js`로 접속할 수 있는 클라이언트 상수 파일을 만든다.
+ *
+ * 이 파일에는 `data/settings.json` 파일의 `application` 객체 일부가 들어가 있다.
+ */
+export function writeClientConstants():void{
+  const data:Partial<JJWAK.ClientSettings> = {
+    'language-support': SETTINGS['language-support']
+  };
+  FS.writeFileSync(
+    resolve("dist", "constants.js"),
+    `window.__CLIENT_SETTINGS=${JSON.stringify(data)}`
+  );
 }

@@ -2,6 +2,7 @@ import React = require("react");
 
 import { Icon, IconType } from "front/@block/Icon";
 import { getTimeDistance } from "./Utility";
+import { FRONT } from "back/utils/Utility";
 
 type PatternResolver = (key:number, ...args:string[]) => React.ReactNode;
 
@@ -17,7 +18,7 @@ const PATTERN_RESOLVER:Table<PatternResolver> = {
   'HUMAN_M': (key, data) => <React.Fragment key={key}>{getHumanMinutes(Number(data))}</React.Fragment>,
   'HUMAN_N': (key, data) => <React.Fragment key={key}>{getHumanNumber(Number(data))}</React.Fragment>,
 };
-let TABLE:Table<string> = "/*{'window.__LANGUAGE'}*/" as any;
+let TABLE:Table<string> = FRONT && eval("window.__LANGUAGE");
 
 /**
  * 사용할 문자열표를 설정한다.
