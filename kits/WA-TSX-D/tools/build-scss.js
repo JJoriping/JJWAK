@@ -1,6 +1,6 @@
 const FS = require("fs");
 const Path = require("path");
-const SASS = require("node-sass");
+const SASS = require("sass");
 
 const Common = require("./lib/common");
 
@@ -9,9 +9,9 @@ async function main(){
     try{
       const result = await run(k);
 
-      console.info("node-sass", k, `in ${result.stats.duration}ms`);
+      console.info("SASS", k, `in ${result.stats.duration}ms`);
     }catch(err){
-      console.error("node-sass", err, `at ${err.file}(${err.line},${err.column})`);
+      console.error("SASS", err, `at ${err.file}(${err.line},${err.column})`);
       break;
     }
   }

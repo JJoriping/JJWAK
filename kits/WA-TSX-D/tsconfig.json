@@ -1,16 +1,14 @@
 {
+  "extends": "@tsconfig/node14/tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2018",
     "jsx": "react",
     "baseUrl": "./src",
     "sourceMap": true,
+    "lib": [ "ES2020", "DOM" ],
 
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noImplicitReturns": true,
-    
+    "strict": true,
+
+    "esModuleInterop": true,
     "experimentalDecorators": true
   }
 }

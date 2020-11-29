@@ -1,4 +1,4 @@
-import TypeORM = require("typeorm");
+import TypeORM from "typeorm";
 
 import { ValueTransformer } from "typeorm/decorator/options/ValueTransformer";
 
@@ -39,7 +39,7 @@ export class Transformer{
   };
   public static Point:ValueTransformer = {
     from: (v:string) => {
-      return v.match(Transformer.PARSER_POINT_FROM).slice(1).map(Number);
+      return v.match(Transformer.PARSER_POINT_FROM)!.slice(1).map(Number);
     },
     to: (v:number[]) => {
       return v && `POINT(${v[0]} ${v[1]})`;

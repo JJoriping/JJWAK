@@ -1,4 +1,4 @@
-import React = require("react");
+import React from "react";
 
 type ActionReceiverPolytable = {
   [key in keyof JJWAK.ActionReceiverTable]: Array<JJWAK.ActionReceiverTable[key]>
@@ -24,10 +24,13 @@ export default abstract class JJorm<P = {}, S = {}> extends React.PureComponent<
     if(!JJorm.flushed){
       return void JJorm.triggers.push(() => JJorm.trigger(type, ...args));
     }
-    const list:Action<any[]>[] = JJorm.ACTION_RECEIVER_POLYTABLE[type] || [];
+    const list = JJorm.ACTION_RECEIVER_POLYTABLE[type];
 
+    if(!list){
+      return
+    }
     for(let i = list.length - 1; i >= 0; i--){
-      if(list[i](...args) === false) break;
+      if(list[i]!.apply(list[i], args) === false) break;
     }
   }
 

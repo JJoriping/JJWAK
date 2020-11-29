@@ -1,4 +1,4 @@
-import React = require("react");
+import React from "react";
 
 import { Icon, IconType } from "front/@block/Icon";
 import { getTimeDistance } from "./Utility";
@@ -81,7 +81,7 @@ export default class L{
     const R:React.ReactNode[] = [];
     const PATTERN:RegExp = new RegExp(L.REGEXP_PATTERN);
     const blockBank:React.ReactNode[] = [];
-    let execArray:RegExpExecArray;
+    let execArray:RegExpExecArray|null;
     let prevIndex:number = 0;
 
     value = value.replace(L.REGEXP_STRICT_ARGS, (p, v1) => {

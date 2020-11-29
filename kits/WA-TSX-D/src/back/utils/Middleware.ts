@@ -1,5 +1,5 @@
-import Express = require("express");
-import BodyParser = require("body-parser");
+import Express from "express";
+import BodyParser from "body-parser";
 
 export const raw = BodyParser.raw({ limit: "100MB" });
 export const send404:Express.RequestHandler = (req, res) => {

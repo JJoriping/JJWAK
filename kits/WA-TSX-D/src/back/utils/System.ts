@@ -1,8 +1,7 @@
-import FS = require("fs");
-import Path = require("path");
+import FS from "fs";
+import Path from "path";
 
 import { reduceToTable, TIMEZONE_OFFSET } from "./Utility";
-import { Logger } from "./Logger";
 
 /**
  * 프로젝트 루트 경로.
@@ -19,7 +18,7 @@ export const ENDPOINTS:Table<any> = {};
 /**
  * `data/settings.json` 파일 객체.
  */
-export const SETTINGS:JJWAK.Settings = Object.assign(
+export const SETTINGS:Schema.Settings = Object.assign(
   {},
   JSON.parse(getProjectData("settings.json").toString()),
   DEVELOPMENT ? JSON.parse(getProjectData("settings.dev.json").toString()) : {}
@@ -35,12 +34,7 @@ export const PACKAGE:Table<any> = JSON.parse(getProjectData("../package.json").t
  * @param path 프로젝트 데이터 폴더에서의 하위 경로.
  */
 export function getProjectData(path:string):Buffer{
-  try{
-    return FS.readFileSync(Path.resolve(__dirname, `../data/${path}`));
-  }catch(e){
-    Logger.error().put(e).out();
-    return null;
-  }
+  return FS.readFileSync(Path.resolve(__dirname, `../data/${path}`));
 }
 /**
  * 프로젝트 데이터 폴더의 파일에 비동기식으로 내용을 쓴다.

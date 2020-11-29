@@ -1,4 +1,4 @@
-import TypeORM = require("typeorm");
+import TypeORM from "typeorm";
 
 import { SETTINGS } from "./System";
 import { CLOTHES } from "./Clothes";
@@ -42,7 +42,7 @@ export default class DB{
     return DB.Manager.connection.getMetadata(Target);
   }
   public static getColumnName(table:TypeORM.EntityMetadata, column:string):string{
-    return table.findColumnWithPropertyName(column).databaseName;
+    return table.findColumnWithPropertyName(column)!.databaseName;
   }
   public static callProcedure(manager:TypeORM.EntityManager, name:string, ...args:any[]):Promise<void>{
     return manager.query(`CALL dds_p_${name}(${Iterator(args.length, "?").join(',')})`, args);
@@ -68,10 +68,12 @@ export default class DB{
   }
   public static async count<T>(Model:new() => T, conditions?:TypeORM.FindConditions<T>):Promise<number>{
     // NOTE .count() 함수는 내부적으로 DISTINCT PK를 쓰고 있어 느리다.
-    return (await DB.Manager.createQueryBuilder(Model, "model")
+    const qb = DB.Manager.createQueryBuilder(Model, "model")
       .select("COUNT(*) AS count")
-      .where(conditions)
-      .getRawOne()
-    )['count'];
+    ;
+    if(conditions){
+      qb.where(conditions)
+    }
+    return (await qb.getRawOne())['count'];
   }
 }

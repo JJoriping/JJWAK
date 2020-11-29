@@ -1,6 +1,6 @@
 const FS = require("fs");
 const Path = require("path");
-const SASS = require("node-sass");
+const SASS = require("sass");
 
 const Common = require("./common");
 

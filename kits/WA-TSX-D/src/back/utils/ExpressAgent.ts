@@ -1,6 +1,7 @@
-import Express = require("express");
-import BodyParser = require("body-parser");
-import CookieParser = require("cookie-parser");
+import Path from "path";
+import Express from "express";
+import BodyParser from "body-parser";
+import CookieParser from "cookie-parser";
 
 import { resolve, SETTINGS } from "./System";
 import * as ReactNest from "./ReactNest";
@@ -10,7 +11,11 @@ import { Logger, LogStyle } from "./Logger";
 
 export default function(App:Express.Application):void{
   // JJWAK 기본
-  App.engine("js", ReactNest.Engine);
+  App.engine("js", ReactNest.Engine as (
+    path:string,
+    options:object,
+    callback:(e:any, rendered:string) => void
+  ) => void);
   App.set('views', resolve("dist", "pages"));
   App.set('view engine', "js");
   App.use("/libs", Express.static(resolve("dist", "libs")), send404);

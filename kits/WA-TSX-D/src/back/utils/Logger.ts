@@ -171,11 +171,11 @@ export class Logger{
   private static escape(style:LogColor[] = LogStyle.NORMAL):string{
     return style.reduce((pv, v) => pv + `\x1b[${v}m`, "");
   }
-  private static getCaller():CallerInfo{
-    const error = new Error().stack.split('\n');
+  private static getCaller():CallerInfo|null{
+    const error = new Error().stack!.split('\n');
 
     for(let level = 4; level < error.length; level++){
-      let chunk:RegExpMatchArray;
+      let chunk:RegExpMatchArray|null;
 
       if(chunk = error[level].match(Logger.REGEXP_CALLER)) return {
         file: chunk[2],
@@ -231,12 +231,12 @@ export class Logger{
   private readonly list:[string, string][];
   private readonly timestamp:string;
 
-  private head:string;
+  private head?:string;
   private chunk:string[];
 
   constructor(type:LogLevel = LogLevel.NORMAL, title:string = ""){
     const caller = Logger.getCaller();
-    let fileLimit = Logger.CALLER_LENGTH - String(caller.line).length;
+    let fileLimit = Logger.CALLER_LENGTH - String(caller?.line).length;
 
     this.type = type;
     this.list = [];
@@ -247,9 +247,9 @@ export class Logger{
       fileLimit -= String(Logger.workerProcessId).length + 1;
       this.putS(LogStyle.CALLER_PID, "#", Logger.workerProcessId);
     }
-    this.putS(LogStyle.CALLER_FILE, " ", cut(caller.file, fileLimit).padStart(fileLimit, " "));
-    this.putS(LogStyle.CALLER_LINE, ":", caller.line, " ");
-    this.putS(LogStyle.CALLER, cut(caller.function, Logger.CALLER_LENGTH).padEnd(Logger.CALLER_LENGTH, " "), " ");
+    this.putS(LogStyle.CALLER_FILE, " ", cut(caller?.file || "", fileLimit).padStart(fileLimit, " "));
+    this.putS(LogStyle.CALLER_LINE, ":", caller?.line, " ");
+    this.putS(LogStyle.CALLER, cut(caller?.function || "", Logger.CALLER_LENGTH).padEnd(Logger.CALLER_LENGTH, " "), " ");
     switch(type){
       case LogLevel.NORMAL:
         this.putS(LogStyle.TYPE_NORMAL, "(:)");
@@ -291,7 +291,7 @@ export class Logger{
    * @param head 다음 줄의 제목.
    */
   public next(head?:string):this{
-    this.list.push([ this.head, this.chunk.join('') ]);
+    this.list.push([ this.head || "", this.chunk.join('') ]);
     this.head = head;
     this.chunk = [];
     return this;

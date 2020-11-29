@@ -1,4 +1,4 @@
-import Express = require("express");
+import Express from "express";
 
 import { loadLanguages } from "./Language";
 import { PageBuilder } from "./ReactNest";

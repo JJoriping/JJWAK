@@ -1,12 +1,12 @@
 export class JRef<T = HTMLElement> extends Object{
   private itemSetter?:($:T) => void;
-  public item:T;
-  public items:Table<T>;
+  public item?:T;
+  public items?:Table<T>;
 
   constructor(hashFunction?:($:T) => number|string){
     super();
     if(hashFunction){
-      this.itemSetter = $ => this.items[hashFunction($)] = $;
+      this.itemSetter = $ => this.items![hashFunction($)] = $;
       this.items = {};
     }else{
       this.itemSetter = $ => this.item = $;
@@ -18,6 +18,6 @@ export class JRef<T = HTMLElement> extends Object{
   }
   public set current(value:T){
     // NOTE unmount되는 경우 추적할 수 없고 items에 남게 된다.
-    value && this.itemSetter(value);
+    value && this.itemSetter!(value);
   }
 }

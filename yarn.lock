@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@tsconfig/node14@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@tsconfig/node14/-/node14-1.0.0.tgz#5bd046e508b1ee90bc091766758838741fdefd6e"
+  integrity sha512-RKkL8eTdPv6t5EHgFKIVQgsDapugbuOptNd9OOunN/HAkzmmTnZELx1kNCK0rSdUYGmiFMM3rRQMAWiyp023LQ==
+
 buffer-alloc-unsafe@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/buffer-alloc-unsafe/-/buffer-alloc-unsafe-1.1.0.tgz#bd7dc26ae2972d0eda253be061dba992349c19f0"
@@ -19,16 +24,6 @@ buffer-fill@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/buffer-fill/-/buffer-fill-1.0.0.tgz#f8f78b76789888ef39f205cd637f68e702122b2c"
   integrity sha1-+PeLdniYiO858gXNY39o5wISKyw=
-
-"jj-format@bitbucket:jjo_kr/jj-format":
-  version "1.0.2"
-  resolved "https://bitbucket.org/jjo_kr/jj-format/get/7582c909ab6ee82be4b0635b8c8bb7999d0ea56f.tar.gz"
-
-"jj-log@bitbucket:jjo_kr/jj-log":
-  version "1.0.5"
-  resolved "https://bitbucket.org/jjo_kr/jj-log/get/08520bfcb54b42696e39d0693bdb422f3571cd79.tar.gz"
-  dependencies:
-    jj-format "bitbucket:jjo_kr/jj-format"
 
 md5-file@^3.2.3:
   version "3.2.3"

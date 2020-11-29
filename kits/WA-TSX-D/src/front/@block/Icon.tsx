@@ -1,4 +1,4 @@
-import React = require("react");
+import React from "react";
 
 // NOTE 백엔드에도 의존성이 있다.
 
@@ -21,7 +21,7 @@ type Props = {
 export const Icon = ({ className, name, type }:Props) => {
   const classList:string[] = [ "icon" ];
   const style:React.CSSProperties = {};
-  let chunk:RegExpMatchArray;
+  let chunk:RegExpMatchArray|null;
 
   if(className){
     classList.push(className);

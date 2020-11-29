@@ -1,5 +1,5 @@
-import Express = require("express");
-import ALP = require("accept-language-parser");
+import Express from "express";
+import ALP from "accept-language-parser";
 
 import { SETTINGS, getProjectData } from "./System";
 import { reduceToTable, resolveLanguageArguments } from "./Utility";

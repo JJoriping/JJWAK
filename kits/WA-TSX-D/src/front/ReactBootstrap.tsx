@@ -1,5 +1,5 @@
-import React = require("react");
-import ReactDOM = require("react-dom");
+import React from "react";
+import ReactDOM from "react-dom";
 
 import Footer from "./@global/Footer";
 import Header from "./@global/Header";
@@ -7,7 +7,7 @@ import L from "./@global/Language";
 import JJorm from "./JJorm";
 
 type State = {
-  'error': Error
+  'error'?: Error
 };
 export default function Bind(TargetClass:any):void{
   const $root = document.createElement("main");
@@ -23,9 +23,7 @@ export class Root extends JJorm<JJWAK.Page.Props<any>, State>{
     return { error };
   }
 
-  state:State = {
-    error: null
-  };
+  state:State = {};
 
   componentDidMount():void{
     super.componentDidMount();

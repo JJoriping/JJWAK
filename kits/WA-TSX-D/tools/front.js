@@ -102,15 +102,15 @@ function attach(name, command, ...args){
 function attachJS(page){
   return isProductionMode
     ? attach("JS", "webpack", [
-      "-p",
+      "--mode", "production",
       "--entry", `./src/front/${page}/index.tsx`,
-      "--output", `./dist/pages/${page}.js`
+      "--output-filename", `${page}.js`
     ])
     : attach("JS", "webpack", [
       "-w",
       "--mode", "development",
       "--entry", `./src/front/${page}/index.tsx`,
-      "--output", `./dist/pages/${page}.js`
+      "--output-filename", `${page}.js`
     ])
   ;
 }

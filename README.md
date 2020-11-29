@@ -34,7 +34,6 @@ Cross-platform Integrated Web Application Development Kit
 | entity.js                   | creates an entity and makes it ready to be used. |
 | front.js                    | is a batch of watching front-end stuffs. |
 | check-front.js              | checks whether required front-end libraries are available and installs if needed. |
-| check-global.js             | checks whether required global libraries are available and installs if needed. |
 | page.js                     | creates a page and makes it ready to be used. |
 | schema.js                   | creates a JSON schema file from a given type described in `Schema.d.ts`. |
 | setup.js                    | is an interactive script for setting `package.json`. |

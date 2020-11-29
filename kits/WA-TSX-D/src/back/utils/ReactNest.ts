@@ -1,6 +1,6 @@
-import Express = require("express");
-import React = require("react");
-import ReactDOMServer = require("react-dom/server");
+import Express from "express";
+import React from "react";
+import ReactDOMServer from "react-dom/server";
 
 import { setTable } from "front/@global/Language";
 import { Root } from "front/ReactBootstrap";

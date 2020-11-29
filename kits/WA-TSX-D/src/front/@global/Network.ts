@@ -33,7 +33,7 @@ export class Cookie{
   private static parseCookies():Table<string>{
     const R:Table<string> = {};
     const data = document.cookie;
-    let arr:RegExpMatchArray;
+    let arr:RegExpMatchArray|null;
 
     if(!data){
       return R;
@@ -71,7 +71,7 @@ export class HRef{
   private static parseURL():Table<string>{
     const R:Table<string> = {};
     const data = location.search.slice(1);
-    let arr:RegExpMatchArray;
+    let arr:RegExpMatchArray|null;
 
     if(!data){
       return R;
@@ -205,16 +205,16 @@ export class XHR{
 
     XHR.table[this.id] = this;
   }
-  private getOnReadyStateChangeClosure(res:XHRResultHandler):() => void{
+  private getOnReadyStateChangeClosure(res?:XHRResultHandler):() => void{
     return () => {
       if(this.source.readyState !== XMLHttpRequest.DONE) return;
-      const contentType:string = this.source.getResponseHeader('Content-Type');
+      const contentType = this.source.getResponseHeader('Content-Type');
       let data:string|Table<any> = this.source.response;
 
       if(contentType?.startsWith("application/json")){
         data = JSON.parse(String(data));
       }
-      res(this.source.status, data);
+      res?.(this.source.status, data);
     };
   }
 }

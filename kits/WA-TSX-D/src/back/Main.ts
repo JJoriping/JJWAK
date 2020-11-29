@@ -1,5 +1,5 @@
-import Express = require("express");
-import Spdy = require("spdy");
+import Express from "express";
+import Spdy from "spdy";
 
 import DB from "./utils/Database";
 import ExpressAgent from "./utils/ExpressAgent";
@@ -8,7 +8,7 @@ import Route from "./utils/Route";
 import { DEVELOPMENT, getProjectData, loadEndpoints, SETTINGS, writeClientConstants } from "./utils/System";
 import { Logger } from "./utils/Logger";
 
-const SPDY_OPTIONS:Spdy.server.ServerOptions = SETTINGS['https'] ? {
+const SPDY_OPTIONS:Spdy.server.ServerOptions|null = SETTINGS['https'] ? {
   key: getProjectData(SETTINGS['https']['key']),
   cert: getProjectData(SETTINGS['https']['cert'])
 } : null;
@@ -33,6 +33,8 @@ DB.initialize().then(() => {
     });
   }
 });
-process.on('unhandledRejection', (err:Error) => {
-  Logger.error("Unhandled promise rejection").put(err.stack).out();
+process.on('unhandledRejection', err => {
+  const content = err instanceof Error ? err.stack : String(err);
+
+  Logger.error("Unhandled promise rejection").put(content).out();
 });
