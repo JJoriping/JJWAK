@@ -55,32 +55,6 @@ declare namespace JJWAK{
      */
     'punctual': boolean
   };
-  type Settings = {
-    'application': {},
-    'cookie': {
-      'age': number,
-      'secret': string
-    },
-    'database': {
-      'host': string,
-      'port': number,
-      'username': string,
-      'password': string,
-      'database': string,
-      'connectTimeout': number,
-      'maxQueryExecutionTime': number
-    },
-    'https': {
-      'key': string,
-      'cert': string
-    },
-    'language-support': Table<string>,
-    'log': {
-      'directory': string,
-      'interval': number
-    },
-    'port': number,
-  };
 }
 declare namespace XHR{
   type Type = keyof XHR.RequestTable|keyof XHR.ResponseTable;

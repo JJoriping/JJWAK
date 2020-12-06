@@ -13,13 +13,34 @@ export type XHRResponse<T> = {
 type XHRResultHandler = (status:number, result:any) => void;
 type ProgressEventHandler = (e:ProgressEvent, req:XMLHttpRequest) => void;
 
-export function getFormData($form:HTMLFormElement):Table<string>{
-  const formData = new FormData($form);
-  const R:Table<string> = {};
+export function getFormData($form:HTMLFormElement):FormDataTable{
+  const R:FormDataTable = {};
 
-  for(const [ k, v ] of formData.entries()){
-    if(typeof v === "string"){
-      R[k] = v;
+  for(const $v of $form.querySelectorAll("input")){
+    if(!$v.name){
+      continue;
+    }
+    switch($v.type){
+      case "checkbox":
+        R[$v.name] = $v.checked;
+        break;
+      case "radio":
+        if(!$v.checked){
+          continue;
+        }
+        switch($v.dataset['type']){
+          case "number":
+            R[$v.name] = Number($v.value);
+            break;
+          default:
+            R[$v.name] = $v.value;
+        }
+        break;
+      case "number":
+        R[$v.name] = Number($v.value);
+        break;
+      default:
+        R[$v.name] = $v.value;
     }
   }
   return R;
@@ -171,7 +192,7 @@ export class XHR{
       throw Error(`알 수 없는 유형: ${type}`);
     }
     const [ method, _url ] = XHR.REQUEST_URL_TABLE[type];
-    const url = _url.replace(XHR.REGEXP_ARGS, (_, p1) => args[p1]);
+    const url = _url.replace(XHR.REGEXP_ARGS, (_, p1) => args?.[p1]);
 
     if(method === "GET"){
       return XHR.get(url, data, onProgress);

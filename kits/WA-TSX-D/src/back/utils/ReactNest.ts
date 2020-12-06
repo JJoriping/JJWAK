@@ -59,7 +59,7 @@ export function Engine<T extends JJWAK.Page.Type>(
   const SSR = $.ssr;
   let Index:any;
 
-  $.title = L(`${KEY}#title`, ...($.metadata.titleArgs || []));
+  $.title = L(`${KEY}#title`, ...($.metadata?.titleArgs || []));
   $.version = PACKAGE['version'];
   // NOTE Express 내부적으로 정의한 정보가 외부에 노출되지 않도록 삭제
   delete ($ as any)['settings'];

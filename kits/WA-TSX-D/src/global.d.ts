@@ -7,6 +7,10 @@ declare type Action<T extends any[] = []> = (...args:T) => (boolean|void);
  */
 declare type ArgumentsOf<T> = T extends (...args:infer Arguments) => any ? Arguments : never;
 /**
+ * FormData로 삼을 수 있는 자료형.
+ */
+declare type FormDataTable = Table<string|number|boolean>;
+/**
  * 딕셔너리의 자료형.
  *
  * 식별자의 자료형은 문자열로 취급한다.
