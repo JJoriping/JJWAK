@@ -1,4 +1,4 @@
-import TypeORM from "typeorm";
+import * as TypeORM from "typeorm";
 
 @TypeORM.Entity({ name: "dds_achievements" })
 export default class Example implements DB.Sessionizable<DB.Example>{

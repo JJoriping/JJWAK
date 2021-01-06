@@ -10,6 +10,7 @@ const package = JSON.parse(FS.readFileSync("./package.json").toString());
 console.log("*** JJWAK WA-TSX Setup ***");
 if('name' in package){
   console.log("Already settled");
+  process.exit();
 }else{
   console.log("Please introduce your application!", "(Ctrl+C to abort)");
   read("Name", cwd.slice(cwd.lastIndexOf("\\") + 1).toLowerCase().replace(/\W/g, "-"))

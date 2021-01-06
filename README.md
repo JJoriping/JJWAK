@@ -2,14 +2,14 @@
 Cross-platform Integrated Web Application Development Kit
 
 ## Prerequisite
-- Node.js 8
+- Node.js 12
 - Yarn
 - Git
 ## Setup
 1. `yarn global add github:JJoriping/JJWAK`
 1. Locate the project you want to start.
 1. `jjwak`
-1. `yarn run settle`
+1. `yarn settle`
 1. `yarn start`
 ## Development
 ### WA-TSX-D
