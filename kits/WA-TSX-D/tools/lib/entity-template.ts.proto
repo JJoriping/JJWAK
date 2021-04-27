@@ -1,4 +1,4 @@
-import TypeORM = require("typeorm");
+import * as TypeORM = require("typeorm");
 
 @TypeORM.Entity({ name: "%%TABLE%%" })
 export default class %%NAME%%{

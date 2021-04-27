@@ -1,3 +1,5 @@
+import { JJWAK } from "common/JJWAK";
+
 function getBoolean(name:string):boolean{
   return process.argv.includes(name);
 }

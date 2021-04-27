@@ -1,5 +1,7 @@
 import React from "react";
 
+import { JJWAK } from "common/JJWAK";
+
 type ActionReceiverPolytable = {
   [key in keyof JJWAK.ActionReceiverTable]: Array<JJWAK.ActionReceiverTable[key]>
 };

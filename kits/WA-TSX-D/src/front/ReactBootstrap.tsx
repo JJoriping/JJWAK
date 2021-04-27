@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import { JJWAK } from "common/JJWAK";
 import Footer from "./@global/Footer";
 import Header from "./@global/Header";
 import L from "./@global/Language";

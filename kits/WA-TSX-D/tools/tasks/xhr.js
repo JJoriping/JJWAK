@@ -10,10 +10,10 @@ if(!NAME || !METHOD || !PATH){
   process.exit();
 }
 
-// dds.xhr.req.d.ts 수정
-append("./src/common/xhr.req.d.ts");
-// dds.xhr.res.d.ts 수정
-append("./src/common/xhr.res.d.ts");
+// XHRRequest 수정
+append("./src/common/XHRRequest.ts");
+// XHRResponse 수정
+append("./src/common/XHRResponse.ts");
 // endpoints.json 수정
 FS.readFile("./data/endpoints.json", (_, buffer) => {
   const lines = [];

@@ -7,6 +7,7 @@ const TYPE_TABLE = {
   'bigint': "number",
   'varchar': "string",
   'int': "number",
+  'double': "number",
   'char': "string",
   'tinyint': "number",
   'smallint': "number",
@@ -14,6 +15,7 @@ const TYPE_TABLE = {
   'tinytext': "string",
   'json': "Table<any>",
   'timestamp': "Date",
+  'datetime': "Date",
   'binary': "string"
 };
 let context = "";

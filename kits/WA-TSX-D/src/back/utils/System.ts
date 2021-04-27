@@ -1,7 +1,9 @@
 import FS from "fs";
 import Path from "path";
 
+import { JJWAK } from "common/JJWAK";
 import { reduceToTable, TIMEZONE_OFFSET } from "./Utility";
+import { Schema } from "common/Schema";
 
 /**
  * 프로젝트 루트 경로.

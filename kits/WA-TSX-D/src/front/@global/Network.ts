@@ -1,4 +1,7 @@
 import { CLIENT_SETTINGS, isEmpty } from "back/utils/Utility";
+import { XHRType } from "common/JJWAK";
+import { XHRRequestTable } from "common/XHRRequest";
+import { XHRResponseTable } from "common/XHRResponse";
 
 type XHROptions = {
   'method': "GET"|"POST",
@@ -131,10 +134,10 @@ export class XHR{
   private static table:Table<XHR> = {};
   private static id:number = 0;
 
-  private static send<T extends XHR.Type>(
+  private static send<T extends XHRType>(
     options:XHROptions,
     onProgress?:ProgressEventHandler
-  ):Promise<XHRResponse<XHR.ResponseTable[T]>>{
+  ):Promise<XHRResponse<XHRResponseTable[T]>>{
     return new Promise((res, rej) => {
       const xhr = new XHR(options, (status, result) => {
         const R:XHRResponse<any> = {
@@ -154,11 +157,11 @@ export class XHR{
       }, onProgress);
     });
   }
-  private static get<T extends XHR.Type>(
+  private static get<T extends XHRType>(
     url:string,
-    data?:XHR.RequestTable[T],
+    data?:XHRRequestTable[T],
     onProgress?:ProgressEventHandler
-  ):Promise<XHRResponse<XHR.ResponseTable[T]>>{
+  ):Promise<XHRResponse<XHRResponseTable[T]>>{
     if(data && !isEmpty(data)){
       url = url + HRef.stringifyURL(data, true);
     }
@@ -167,11 +170,11 @@ export class XHR{
       url
     }, onProgress);
   }
-  private static post<T extends XHR.Type>(
+  private static post<T extends XHRType>(
     url:string,
-    data?:XHR.RequestTable[T],
+    data?:XHRRequestTable[T],
     onProgress?:ProgressEventHandler
-  ):Promise<XHRResponse<XHR.ResponseTable[T]>>{
+  ):Promise<XHRResponse<XHRResponseTable[T]>>{
     const chunk:any = (data as any) instanceof ArrayBuffer
       ? { data, headers: { 'Content-Type': "application/octet-stream" } }
       : { data: JSON.stringify(data), headers: { 'Content-Type': "application/json;charset=utf-8" } }
@@ -182,17 +185,17 @@ export class XHR{
       ...chunk
     }, onProgress);
   }
-  public static go<T extends XHR.Type>(
+  public static go<T extends XHRType>(
     type:T,
     args?:any[],
-    data?:XHR.RequestTable[T],
+    data?:XHRRequestTable[T],
     onProgress?:ProgressEventHandler
-  ):Promise<XHRResponse<XHR.ResponseTable[T]>>{
+  ):Promise<XHRResponse<XHRResponseTable[T]>>{
     if(!XHR.REQUEST_URL_TABLE.hasOwnProperty(type)){
       throw Error(`알 수 없는 유형: ${type}`);
     }
     const [ method, _url ] = XHR.REQUEST_URL_TABLE[type];
-    const url = _url.replace(XHR.REGEXP_ARGS, (_, p1) => args?.[p1]);
+    const url = _url.replace(XHR.REGEXP_ARGS, (_:string, p1:string) => args?.[parseInt(p1)]);
 
     if(method === "GET"){
       return XHR.get(url, data, onProgress);

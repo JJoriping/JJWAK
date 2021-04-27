@@ -1,15 +1,19 @@
-declare namespace JJWAK{
-  namespace Page{
-    type Type = keyof JJWAK.Page.DataTable;
-    type DataTable = {
+import { Schema } from "./Schema";
+import { XHRRequestTable } from "./XHRRequest";
+import { XHRResponseTable } from "./XHRResponse";
+
+export namespace JJWAK{
+  export namespace Page{
+    export type Type = keyof JJWAK.Page.DataTable;
+    export type DataTable = {
       //@jjwak-auto PAGE {
       'Index': never
       //@jjwak-auto PAGE }
     };
-    type Metadata = {
+    export type Metadata = {
       'titleArgs'?: string[]
     };
-    interface Props<T extends JJWAK.Page.Type>{
+    export interface Props<T extends JJWAK.Page.Type>{
       locale:string;
       page:T;
       path:string;
@@ -22,15 +26,15 @@ declare namespace JJWAK{
       ssr?:boolean;
     }
   }
-  type ActionReceiverTable = Partial<{
+  export type ActionReceiverTable = Partial<{
     'example-action': Action
   }>;
-  type ClientSettings = Pick<Schema.Settings['application'],
+  export type ClientSettings = Pick<Schema.Settings['application'],
     | 'language-support'
   >&{
-    'endpoints': { [key in XHR.Type ]: [ "GET"|"POST", string ] }
+    'endpoints': { [key in XHRType ]: [ "GET"|"POST", string ] }
   };
-  type Clothes = {
+  export type Clothes = {
     /**
      * `--dev`
      * 
@@ -44,7 +48,7 @@ declare namespace JJWAK{
      */
     'queryLogging'?: boolean
   };
-  type ScheduleOptions = {
+  export type ScheduleOptions = {
     /**
      * `true`인 경우 시작할 때 한 번 즉시 호출한다.
      */
@@ -56,6 +60,4 @@ declare namespace JJWAK{
     'punctual': boolean
   };
 }
-declare namespace XHR{
-  type Type = keyof XHR.RequestTable|keyof XHR.ResponseTable;
-}
+export type XHRType = keyof XHRRequestTable|keyof XHRResponseTable;

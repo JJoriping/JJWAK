@@ -6,6 +6,7 @@ import { setTable } from "front/@global/Language";
 import { Root } from "front/ReactBootstrap";
 import { getLanguageTable, L } from "./Language";
 import { getProjectData, PACKAGE, SETTINGS } from "./System";
+import { JJWAK } from "common/JJWAK";
 
 const HTML_TEMPLATE = getProjectData("template.html").toString();
 

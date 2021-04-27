@@ -3,6 +3,7 @@ import TypeORM from "typeorm";
 import { SETTINGS } from "./System";
 import { CLOTHES } from "./Clothes";
 import { Iterator } from "./Utility";
+import { Database } from "common/Database";
 
 //@jjwak-auto DB_IMPORT {
 import Example from "back/models/Example";
@@ -32,7 +33,7 @@ export default class DB{
     });
     Logger.success("DB").put(SETTINGS['database'].host).out();
   }
-  public static paginate(length:number, page:number):DB.PaginateOptions{
+  public static paginate(length:number, page:number):Database.PaginateOptions{
     return {
       skip: length * page,
       take: length

@@ -1,5 +1,5 @@
-declare namespace Schema{
-  type Settings = {
+export namespace Schema{
+  export type Settings = {
     '$schema': "./settings.schema.json",
     'application': {
       'language-support': Table<string>

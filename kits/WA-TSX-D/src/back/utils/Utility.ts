@@ -1,3 +1,4 @@
+import { JJWAK } from "common/JJWAK";
 import { DateUnit } from "./enums/DateUnit";
 
 /**
