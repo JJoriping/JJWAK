@@ -5,7 +5,7 @@ import ReactDOMServer from "react-dom/server";
 import { setTable } from "front/@global/Language";
 import { Root } from "front/ReactBootstrap";
 import { getLanguageTable, L } from "./Language";
-import { getProjectData, PACKAGE, SETTINGS } from "./System";
+import { ENDPOINTS, getProjectData, PACKAGE, SETTINGS } from "./System";
 import { JJWAK } from "common/JJWAK";
 
 const HTML_TEMPLATE = getProjectData("template.html").toString();
@@ -67,7 +67,9 @@ export function Engine<T extends JJWAK.Page.Type>(
   delete ($ as any)['cache'];
   delete ($ as any)['_locals'];
 
-  const CLIENT_SETTINGS:Partial<JJWAK.ClientSettings> = {};
+  const CLIENT_SETTINGS:Partial<JJWAK.ClientSettings> = {
+    endpoints: ENDPOINTS[$.page]
+  };
   if(SSR){
     setTable(getLanguageTable($.locale, $.page));
     Index = require(`front/${$.page}/index.tsx`).default;

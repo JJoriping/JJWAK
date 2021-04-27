@@ -1,3 +1,13 @@
+import { ReactNode } from "react";
+
+import { FRONT } from "back/utils/Utility";
+import { JJWAK } from "common/JJWAK";
+
+/**
+ * 현재 페이지 최상위 컴포넌트의 속성 객체.
+ */
+export const PROPS:JJWAK.Page.Props<JJWAK.Page.Type> = FRONT && eval("window['__PROPS']");
+
 /**
  * HTML 공통 속성 `className`의 값에 적합한 문자열을 반환한다.
  *
@@ -34,4 +44,26 @@ export function getPercent(value:number, prev:number, next:number):number{
  */
 export function getTimeDistance(from:number, to:number = Date.now()){
   return (to - from) / 60000;
+}
+/**
+ * 주어진 문자열의 원하는 부분을 변환 함수로 변환한 결과를 React fragment로 반환한다.
+ * 
+ * @param target 대상 문자열.
+ * @param pattern 검색 패턴.
+ * @param mapper 변환 함수.
+ */
+export function replaceIntoFragments(target:string, pattern:RegExp, mapper:(key:number, ...args:string[]) => ReactNode):ReactNode[]{
+  const R:ReactNode[] = [];
+  const p = new RegExp(pattern);
+  let chunk:RegExpExecArray|null;
+  let lastIndex = 0;
+  
+  while(chunk = p.exec(target)){
+    R.push(target.slice(lastIndex, chunk.index), mapper(chunk.index, ...chunk));
+    lastIndex = chunk.index + chunk[0].length;
+  }
+  if(lastIndex < target.length - 1){
+    R.push(target.slice(lastIndex));
+  }
+  return R;
 }

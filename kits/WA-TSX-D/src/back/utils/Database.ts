@@ -1,4 +1,4 @@
-import TypeORM from "typeorm";
+import * as TypeORM from "typeorm";
 
 import { SETTINGS } from "./System";
 import { CLOTHES } from "./Clothes";

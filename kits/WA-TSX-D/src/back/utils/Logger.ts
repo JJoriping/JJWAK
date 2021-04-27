@@ -1,4 +1,4 @@
-import { DateUnit } from "./enums/DateUnit";
+import { DateUnit } from "../enums/DateUnit";
 import { cut, FRONT, TIMEZONE_OFFSET, toSignedString } from "./Utility";
 
 let FS:typeof import("fs");
