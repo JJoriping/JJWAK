@@ -1,4 +1,4 @@
-import TypeORM from "typeorm";
+import * as TypeORM from "typeorm";
 
 import { ValueTransformer } from "typeorm/decorator/options/ValueTransformer";
 

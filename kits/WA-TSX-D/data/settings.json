@@ -5,13 +5,7 @@
     "age": 604800000,
     "secret": "jjwak"
   },
-  "database": {
-    "host": "jjo.kr",
-    "port": 33066,
-    "username": "kkutu",
-    "password": "ehdgoanfrhk100",
-    "database": "kkutu"
-  },
+  "database": {},
   "language-support": {
     "ko-KR": "한국어"
   },
