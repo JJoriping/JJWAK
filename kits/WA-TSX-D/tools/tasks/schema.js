@@ -14,7 +14,7 @@ const target = Path.resolve(__dirname, "../../data", `${NAME.toLowerCase()}.sche
 FS.writeFile(
   target,
   JSON.stringify(SchemaGenerator.createGenerator({
-    path: Path.resolve(__dirname, "../../src/**/*.d.ts"),
+    path: Path.resolve(__dirname, "../../src/**/*.ts"),
     tsconfig: Path.resolve(__dirname, "../../tsconfig.json"),
     type,
     skipTypeCheck: true

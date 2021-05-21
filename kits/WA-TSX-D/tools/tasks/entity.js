@@ -7,6 +7,7 @@ const TYPE_TABLE = {
   'bigint': "number",
   'varchar': "string",
   'int': "number",
+  'float': "number",
   'double': "number",
   'char': "string",
   'tinyint': "number",

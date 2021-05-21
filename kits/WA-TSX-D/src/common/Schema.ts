@@ -1,9 +1,7 @@
 export namespace Schema{
   export type Settings = {
     '$schema': "./settings.schema.json",
-    'application': {
-      'language-support': Table<string>
-    },
+    'application': {},
     'cookie': {
       'age': number,
       'secret': string
