@@ -21,7 +21,7 @@ const WP_ENTRY_STYLE = WP_ENTRY.reduce((pv, v) => {
   pv[v] = Path.resolve(__dirname, `src/front/${v}/style.scss`);
   return pv;
 }, {});
-const WP_ENTRY_LANG = Object.keys(SETTINGS['language-support']).reduce((pv, v) => {
+const WP_ENTRY_LANG = Object.keys(SETTINGS.languageSupport).reduce((pv, v) => {
   pv[v] = Path.resolve(__dirname, `data/lang/${v}.json`);
   return pv;
 }, {});

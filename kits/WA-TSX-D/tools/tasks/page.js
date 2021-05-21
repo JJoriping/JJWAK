@@ -64,7 +64,7 @@ FS.readFile("./src/common/jjwak.d.ts", (_, buffer) => {
   }));
 });
 // 언어 JSON 수정
-for(const k in SETTINGS['language-support']){
+for(const k in SETTINGS['languageSupport']){
   addToDataJSON(`./data/lang/${k}.json`, PAGE, `"${PAGE}": {}`);
 }
 // 끝점 JSON 수정

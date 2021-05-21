@@ -5,7 +5,7 @@ import { SETTINGS, getProjectData } from "./System";
 import { reduceToTable, resolveLanguageArguments } from "./Utility";
 import { Logger } from "./Logger";
 
-const LANGUAGE_SUPPORT = Object.keys(SETTINGS['language-support']);
+const LANGUAGE_SUPPORT = Object.keys(SETTINGS['languageSupport']);
 let LANGUAGES:Table<string>;
 
 /**
@@ -37,7 +37,7 @@ export function getLanguageTable(locale:string, page:string):Table<string>{
 export function getLocale(req:Express.Request):string{
   let R:string = req.cookies['dds.locale'];
 
-  if(!LANGUAGES || !SETTINGS['language-support'][R]){
+  if(!LANGUAGES || !SETTINGS.languageSupport[R]){
     R = ALP.pick(LANGUAGE_SUPPORT, String(req.headers['accept-language'])) || LANGUAGE_SUPPORT[0];
   }
   return R;

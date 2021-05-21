@@ -19,7 +19,7 @@ export namespace Schema{
       'key': string,
       'cert': string
     },
-    'language-support': Table<string>,
+    'languageSupport': Table<string>,
     'log': {
       'directory': string,
       'interval': number

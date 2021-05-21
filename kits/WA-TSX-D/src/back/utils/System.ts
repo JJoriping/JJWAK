@@ -116,7 +116,7 @@ export function schedule(
  */
 export function writeClientConstants():void{
   const data:Partial<JJWAK.ClientSettings> = {
-    'language-support': SETTINGS['language-support']
+    languageSupport: SETTINGS.languageSupport
   };
   FS.writeFileSync(
     resolve("dist", "constants.js"),

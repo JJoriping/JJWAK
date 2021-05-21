@@ -30,8 +30,9 @@ export namespace JJWAK{
     'example-action': Action
   }>;
   export type ClientSettings = Pick<Schema.Settings['application'],
-    | 'language-support'
+    | never
   >&{
+    'languageSupport': Table<string>,
     'endpoints': { [key in XHRType ]: [ "GET"|"POST", string ] }
   };
   export type Clothes = {
