@@ -1,25 +1,25 @@
 import { DateUnit } from "../enums/DateUnit";
 import { cut, FRONT, TIMEZONE_OFFSET, toSignedString } from "./Utility";
 
-let FS:typeof import("fs");
-let System:typeof import("back/utils/System");
+let FS: typeof import("fs");
+let System: typeof import("back/utils/System");
 
 type CallerInfo = {
-  'file': string,
-  'line': number,
-  'function': string
+  file: string;
+  line: number;
+  function: string;
 };
 type LogFileInfo = {
-  'stream': NodeJS.WritableStream,
-  'path': string,
-  'createdAt': number
+  stream: NodeJS.WritableStream;
+  path: string;
+  createdAt: number;
 };
 /**
  * 로그의 색 열거형.
  *
  * ANSI 탈출 구문 `\x1b[?m`의 `?`에 들어갈 값과 같도록 설정되어 있다.
  */
-export enum LogColor{
+export enum LogColor {
   NORMAL,
   BRIGHT,
   DIM,
@@ -41,19 +41,19 @@ export enum LogColor{
   B_BLUE,
   B_MAGENTA,
   B_CYAN,
-  B_WHITE
+  B_WHITE,
 }
 /**
  * 로그의 수준 열거형.
  *
  * 수준에 따라 표시되는 아이콘이 달라지며, `ERROR` 수준이라고 해도 출력 후 자동으로 종료되지 않는다.
  */
-export enum LogLevel{
+export enum LogLevel {
   NORMAL,
   INFO,
   SUCCESS,
   WARNING,
-  ERROR
+  ERROR,
 }
 /**
  * 로그를 출력해 주는 유틸리티 클래스.
@@ -66,14 +66,16 @@ export enum LogLevel{
  * 서버가 로그를 출력하려는 경우 `Logger.initialize()` 메소드로 초기화함으로써
  * 로그 내용을 파일로 보관할 수 있다.
  */
-export class Logger{
+export class Logger {
   private static readonly REGEXP_ANSI_ESCAPE = /\x1b\[(\d+)m/g;
   // 캡처되는 그룹 { 함수명, 파일명, 줄 번호 }
-  private static readonly REGEXP_CALLER = /^\s*at (.+) \(.+?([^\\/]+):(\d+):\d+\)$/;
+  private static readonly REGEXP_CALLER =
+    /^\s*at (.+) \(.+?([^\\/]+):(\d+):\d+\)$/;
   // 캡처되는 그룹 { 파일명, 줄 번호, 칸 번호 }
-  private static readonly REGEXP_CALLER_ANONYMOUS = /^\s*at .+?([^\\/]+):(\d+):(\d+)$/;
+  private static readonly REGEXP_CALLER_ANONYMOUS =
+    /^\s*at .+?([^\\/]+):(\d+):(\d+)$/;
   private static readonly CALLER_LENGTH = 20;
-  private static readonly WEBKIT_STYLE_TABLE:{ [key in LogColor]: string } = {
+  private static readonly WEBKIT_STYLE_TABLE: { [key in LogColor]: string } = {
     [LogColor.NORMAL]: "",
     [LogColor.BRIGHT]: "font-weight: bold",
     [LogColor.DIM]: "font-style: italic",
@@ -95,11 +97,11 @@ export class Logger{
     [LogColor.B_BLUE]: "background: blue",
     [LogColor.B_MAGENTA]: "background: magenta",
     [LogColor.B_CYAN]: "background: cyan",
-    [LogColor.B_WHITE]: "background: white"
+    [LogColor.B_WHITE]: "background: white",
   };
-  private static recentFileInfo:LogFileInfo;
-  private static subject:string;
-  private static workerProcessId:number;
+  private static recentFileInfo: LogFileInfo;
+  private static subject: string;
+  private static workerProcessId: number;
 
   /**
    * 로그 시스템을 초기화하고 파일에 쓸 준비를 한다.
@@ -109,21 +111,22 @@ export class Logger{
    *
    * @param subject 주체의 식별자. 로그 디렉토리의 하위 디렉토리 이름으로 쓰인다.
    */
-  public static async initialize(subject:string):Promise<void>{
+  public static async initialize(subject: string): Promise<void> {
     FS = await import("fs");
     System = await import("back/utils/System");
-    if((await import("cluster")).isWorker){
+    if ((await import("cluster")).default.isWorker) {
       Logger.workerProcessId = (await import("process")).pid;
     }
     Logger.subject = subject;
 
-    if(!FS.existsSync(Logger.directoryPath)){
+    if (!FS.existsSync(Logger.directoryPath)) {
       FS.mkdirSync(Logger.directoryPath, { recursive: true });
     }
-    if(System.SETTINGS.log.interval) System.schedule(Logger.shiftFile, System.SETTINGS.log.interval, {
-      callAtStart: true,
-      punctual: true
-    });
+    if (System.SETTINGS.log.interval)
+      System.schedule(Logger.shiftFile, System.SETTINGS.log.interval, {
+        callAtStart: true,
+        punctual: true,
+      });
     else Logger.warning().put("Log files won't be generated.").out();
   }
 
@@ -132,7 +135,7 @@ export class Logger{
    *
    * @param title 제목.
    */
-  public static error(title?:string):Logger{
+  public static error(title?: string): Logger {
     return new Logger(LogLevel.ERROR, title);
   }
   /**
@@ -140,7 +143,7 @@ export class Logger{
    *
    * @param title 제목.
    */
-  public static info(title?:string):Logger{
+  public static info(title?: string): Logger {
     return new Logger(LogLevel.INFO, title);
   }
   /**
@@ -148,7 +151,7 @@ export class Logger{
    *
    * @param title 제목.
    */
-  public static log(title?:string):Logger{
+  public static log(title?: string): Logger {
     return new Logger(LogLevel.NORMAL, title);
   }
   /**
@@ -156,7 +159,7 @@ export class Logger{
    *
    * @param title 제목.
    */
-  public static success(title?:string):Logger{
+  public static success(title?: string): Logger {
     return new Logger(LogLevel.SUCCESS, title);
   }
   /**
@@ -164,33 +167,35 @@ export class Logger{
    *
    * @param title 제목.
    */
-  public static warning(title?:string):Logger{
+  public static warning(title?: string): Logger {
     return new Logger(LogLevel.WARNING, title);
   }
 
-  private static escape(style:LogColor[] = LogStyle.NORMAL):string{
+  private static escape(style: LogColor[] = LogStyle.NORMAL): string {
     return style.reduce((pv, v) => pv + `\x1b[${v}m`, "");
   }
-  private static getCaller():CallerInfo|null{
-    const error = new Error().stack!.split('\n');
+  private static getCaller(): CallerInfo | null {
+    const error = new Error().stack!.split("\n");
 
-    for(let level = 4; level < error.length; level++){
-      let chunk:RegExpMatchArray|null;
+    for (let level = 4; level < error.length; level++) {
+      let chunk: RegExpMatchArray | null;
 
-      if(chunk = error[level].match(Logger.REGEXP_CALLER)) return {
-        file: chunk[2],
-        line: Number(chunk[3]),
-        function: chunk[1]
-      };
-      else if(chunk = error[level].match(Logger.REGEXP_CALLER_ANONYMOUS)) return {
-        file: chunk[1],
-        line: Number(chunk[2]),
-        function: `:${chunk[3]} (Unknown)`
-      };
+      if ((chunk = error[level].match(Logger.REGEXP_CALLER)))
+        return {
+          file: chunk[2],
+          line: Number(chunk[3]),
+          function: chunk[1],
+        };
+      else if ((chunk = error[level].match(Logger.REGEXP_CALLER_ANONYMOUS)))
+        return {
+          file: chunk[1],
+          line: Number(chunk[2]),
+          function: `:${chunk[3]} (Unknown)`,
+        };
     }
     return null;
   }
-  private static getLocalFileNameDate():string{
+  private static getLocalFileNameDate(): string {
     const now = new Date();
 
     return [
@@ -200,41 +205,44 @@ export class Logger{
       "-",
       String(now.getHours()).padStart(2, "0"),
       String(now.getMinutes()).padStart(2, "0"),
-      String(now.getSeconds()).padStart(2, "0")
-    ].join('');
+      String(now.getSeconds()).padStart(2, "0"),
+    ].join("");
   }
-  private static getLocalISODate():string{
+  private static getLocalISODate(): string {
     const now = new Date();
     const offset = -Math.round(TIMEZONE_OFFSET / DateUnit.HOUR) || "";
 
-    return new Date(now.getTime() - TIMEZONE_OFFSET).toISOString() + (offset && toSignedString(offset));
+    return (
+      new Date(now.getTime() - TIMEZONE_OFFSET).toISOString() +
+      (offset && toSignedString(offset))
+    );
   }
-  private static shiftFile():void{
+  private static shiftFile(): void {
     const fileName = Logger.getLocalFileNameDate();
     const path = `${Logger.directoryPath}/${fileName}.log`;
 
-    if(Logger.recentFileInfo){
+    if (Logger.recentFileInfo) {
       Logger.recentFileInfo.stream.end();
     }
     Logger.recentFileInfo = {
       stream: FS.createWriteStream(path),
       path,
-      createdAt: Date.now()
+      createdAt: Date.now(),
     };
     Logger.success(Logger.subject).next("Path").put(fileName).out();
   }
-  private static get directoryPath():string{
+  private static get directoryPath(): string {
     return `${__dirname}/${System.SETTINGS.log.directory}/${Logger.subject}`;
   }
 
-  private readonly type:LogLevel;
-  private readonly list:[string, string][];
-  private readonly timestamp:string;
+  private readonly type: LogLevel;
+  private readonly list: [string, string][];
+  private readonly timestamp: string;
 
-  private head?:string;
-  private chunk:string[];
+  private head?: string;
+  private chunk: string[];
 
-  constructor(type:LogLevel = LogLevel.NORMAL, title:string = ""){
+  constructor(type: LogLevel = LogLevel.NORMAL, title: string = "") {
     const caller = Logger.getCaller();
     let fileLimit = Logger.CALLER_LENGTH - String(caller?.line).length;
 
@@ -243,14 +251,25 @@ export class Logger{
     this.timestamp = `[${Logger.getLocalISODate()}]`;
     this.chunk = [];
     this.putS(LogStyle.TIMESTAMP, this.timestamp);
-    if(Logger.workerProcessId){
+    if (Logger.workerProcessId) {
       fileLimit -= String(Logger.workerProcessId).length + 1;
       this.putS(LogStyle.CALLER_PID, "#", Logger.workerProcessId);
     }
-    this.putS(LogStyle.CALLER_FILE, " ", cut(caller?.file || "", fileLimit).padStart(fileLimit, " "));
+    this.putS(
+      LogStyle.CALLER_FILE,
+      " ",
+      cut(caller?.file || "", fileLimit).padStart(fileLimit, " ")
+    );
     this.putS(LogStyle.CALLER_LINE, ":", caller?.line, " ");
-    this.putS(LogStyle.CALLER, cut(caller?.function || "", Logger.CALLER_LENGTH).padEnd(Logger.CALLER_LENGTH, " "), " ");
-    switch(type){
+    this.putS(
+      LogStyle.CALLER,
+      cut(caller?.function || "", Logger.CALLER_LENGTH).padEnd(
+        Logger.CALLER_LENGTH,
+        " "
+      ),
+      " "
+    );
+    switch (type) {
       case LogLevel.NORMAL:
         this.putS(LogStyle.TYPE_NORMAL, "(:)");
         break;
@@ -267,22 +286,32 @@ export class Logger{
         this.putS(LogStyle.TYPE_ERROR, "(×)");
         break;
     }
-    if(title){
+    if (title) {
       this.putS(LogStyle.TITLE, " [", title, "]");
     }
     this.put(" ");
   }
-  private getText():string{
-    const maxDigit = this.list.reduce((pv, v) => pv < v[0]?.length ? v[0].length : pv, 1);
-    const prefix = " ".repeat(this.timestamp.length + 2 * Logger.CALLER_LENGTH + 5);
+  private getText(): string {
+    const maxDigit = this.list.reduce(
+      (pv, v) => (pv < v[0]?.length ? v[0].length : pv),
+      1
+    );
+    const prefix = " ".repeat(
+      this.timestamp.length + 2 * Logger.CALLER_LENGTH + 5
+    );
     const last = this.list.length - 2;
 
     return [
       this.list[0][1],
-      ...this.list.slice(1).map(([ head, body ], i) => {
-        return `${prefix}${Logger.escape(LogStyle.LINE)}${i === last ? "└" : "├"}─ ${(head ?? String(i)).padEnd(maxDigit, " ")}${Logger.escape()}: ${body}`;
-      })
-    ].join('\n');
+      ...this.list.slice(1).map(([head, body], i) => {
+        return `${prefix}${Logger.escape(LogStyle.LINE)}${
+          i === last ? "└" : "├"
+        }─ ${(head ?? String(i)).padEnd(
+          maxDigit,
+          " "
+        )}${Logger.escape()}: ${body}`;
+      }),
+    ].join("\n");
   }
 
   /**
@@ -290,8 +319,8 @@ export class Logger{
    *
    * @param head 다음 줄의 제목.
    */
-  public next(head?:string):this{
-    this.list.push([ this.head || "", this.chunk.join('') ]);
+  public next(head?: string): this {
+    this.list.push([this.head || "", this.chunk.join("")]);
     this.head = head;
     this.chunk = [];
     return this;
@@ -301,23 +330,25 @@ export class Logger{
    *
    * 클라이언트나 파일에 출력하는 경우 ANSI 탈출 구문을 지원하지 않으므로 내용을 일부 수정해 출력한다.
    */
-  public out():void{
-    if(this.chunk.length){
+  public out(): void {
+    if (this.chunk.length) {
       this.next();
     }
     let text = this.getText();
-    let args:string[] = [];
+    let args: string[] = [];
 
-    if(FRONT){
+    if (FRONT) {
       text = text.replace(Logger.REGEXP_ANSI_ESCAPE, (v, p1) => {
         args.push(Logger.WEBKIT_STYLE_TABLE[p1 as LogColor]);
 
         return "%c";
       });
-    }else if(Logger.recentFileInfo){
-      Logger.recentFileInfo.stream.write(`${text.replace(Logger.REGEXP_ANSI_ESCAPE, "")}\n`);
+    } else if (Logger.recentFileInfo) {
+      Logger.recentFileInfo.stream.write(
+        `${text.replace(Logger.REGEXP_ANSI_ESCAPE, "")}\n`
+      );
     }
-    switch(this.type){
+    switch (this.type) {
       case LogLevel.NORMAL:
         console.log(text, ...args);
         break;
@@ -340,7 +371,7 @@ export class Logger{
    *
    * @param args 추가할 내용.
    */
-  public put(...args:any[]):this{
+  public put(...args: any[]): this {
     this.chunk.push(...args);
     return this;
   }
@@ -353,7 +384,7 @@ export class Logger{
    * @param value 색 조합.
    * @param args 추가할 내용.
    */
-  public putS(value:LogColor[], ...args:any[]):this{
+  public putS(value: LogColor[], ...args: any[]): this {
     this.chunk.push(Logger.escape(value), ...args, Logger.escape());
     return this;
   }
@@ -361,22 +392,22 @@ export class Logger{
 /**
  * 로그의 색 조합을 정의하는 유틸리티 클래스.
  */
-export class LogStyle{
-  public static readonly NORMAL = [ LogColor.NORMAL ];
+export class LogStyle {
+  public static readonly NORMAL = [LogColor.NORMAL];
 
-  public static readonly CALLER = [ LogColor.F_CYAN ];
-  public static readonly CALLER_PID = [ LogColor.F_MAGENTA ];
-  public static readonly CALLER_FILE = [ LogColor.BRIGHT, LogColor.F_CYAN ];
-  public static readonly CALLER_LINE = [ LogColor.NORMAL ];
-  public static readonly LINE = [ LogColor.BRIGHT ];
-  public static readonly METHOD = [ LogColor.F_YELLOW ];
-  public static readonly TIMESTAMP = [ LogColor.F_BLUE ];
-  public static readonly TARGET = [ LogColor.BRIGHT, LogColor.F_BLUE ];
-  public static readonly TITLE = [ LogColor.BRIGHT ];
-  public static readonly TYPE_ERROR = [ LogColor.BRIGHT, LogColor.B_RED ];
-  public static readonly TYPE_INFO = [ LogColor.B_BLUE ];
-  public static readonly TYPE_NORMAL = [ LogColor.BRIGHT ];
-  public static readonly TYPE_SUCCESS = [ LogColor.F_BLACK, LogColor.B_GREEN ];
-  public static readonly TYPE_WARNING = [ LogColor.F_BLACK, LogColor.B_YELLOW ];
-  public static readonly XHR = [ LogColor.F_GREEN ];
+  public static readonly CALLER = [LogColor.F_CYAN];
+  public static readonly CALLER_PID = [LogColor.F_MAGENTA];
+  public static readonly CALLER_FILE = [LogColor.BRIGHT, LogColor.F_CYAN];
+  public static readonly CALLER_LINE = [LogColor.NORMAL];
+  public static readonly LINE = [LogColor.BRIGHT];
+  public static readonly METHOD = [LogColor.F_YELLOW];
+  public static readonly TIMESTAMP = [LogColor.F_BLUE];
+  public static readonly TARGET = [LogColor.BRIGHT, LogColor.F_BLUE];
+  public static readonly TITLE = [LogColor.BRIGHT];
+  public static readonly TYPE_ERROR = [LogColor.BRIGHT, LogColor.B_RED];
+  public static readonly TYPE_INFO = [LogColor.B_BLUE];
+  public static readonly TYPE_NORMAL = [LogColor.BRIGHT];
+  public static readonly TYPE_SUCCESS = [LogColor.F_BLACK, LogColor.B_GREEN];
+  public static readonly TYPE_WARNING = [LogColor.F_BLACK, LogColor.B_YELLOW];
+  public static readonly XHR = [LogColor.F_GREEN];
 }
