@@ -11,26 +11,24 @@ import Example from "back/models/Example";
 import { Logger } from "./Logger";
 
 export default class DB {
-  private static agent: TypeORM.Connection;
-
-  public static get Manager(): TypeORM.EntityManager {
-    return DB.agent.manager;
-  }
-  public static async initialize(): Promise<void> {
-    const entities: Function[] = [
+  private static dataSource = new TypeORM.DataSource({
+    type: "mysql",
+    supportBigNumbers: true,
+    bigNumberStrings: false,
+    ...SETTINGS["database"],
+    logging: CLOTHES.queryLogging ? ["query"] : [],
+    entities: [
       //@jjwak-auto DB_ENTITY {
       Example,
       //@jjwak-auto DB_ENTITY }
-    ];
+    ],
+  });
 
-    DB.agent = await TypeORM.createConnection({
-      type: "mysql",
-      supportBigNumbers: true,
-      bigNumberStrings: false,
-      ...SETTINGS["database"],
-      logging: CLOTHES.queryLogging ? ["query"] : [],
-      entities,
-    });
+  public static get Manager(): TypeORM.EntityManager {
+    return DB.dataSource.manager;
+  }
+  public static async initialize(): Promise<void> {
+    await DB.dataSource.initialize();
     Logger.success("DB").put(SETTINGS["database"].host).out();
   }
   public static paginate(
