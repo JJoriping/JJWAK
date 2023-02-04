@@ -1,11 +1,11 @@
 {
-  "extends": "@tsconfig/node14/tsconfig.json",
+  "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
     "target": "ES2016",
     "jsx": "react",
     "baseUrl": "./src",
     "sourceMap": true,
-    "lib": [ "ES2020", "DOM", "DOM.Iterable" ],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
 
     "strict": true,
 
