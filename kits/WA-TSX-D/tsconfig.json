@@ -1,7 +1,7 @@
 {
   "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
-    "target": "ES2016",
+    "target": "ES2022",
     "jsx": "react",
     "baseUrl": "./src",
     "sourceMap": true,

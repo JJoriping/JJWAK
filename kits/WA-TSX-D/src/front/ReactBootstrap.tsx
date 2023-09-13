@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 
 import { JJWAK } from "common/JJWAK";
 import Footer from "./@global/Footer";
@@ -11,12 +11,16 @@ import { PROPS } from "./@global/Utility";
 type State = {
   error?: Error;
 };
-export default function Bind(TargetClass: any): void {
-  const $root = document.getElementById("stage");
+export default function Bind(
+  TargetClass:
+    | typeof React.Component<JJWAK.Page.Props<any>>
+    | React.FC<JJWAK.Page.Props<any>>
+): void {
+  const $stage = document.getElementById("stage") as HTMLElement;
+  const root = ReactDOM.createRoot($stage);
 
-  ReactDOM.render(
-    <Root {...PROPS}>{React.createElement(TargetClass, PROPS)}</Root>,
-    $root
+  root.render(
+    <Root {...PROPS}>{React.createElement(TargetClass, PROPS)}</Root>
   );
 }
 export class Root extends JJorm<JJWAK.Page.Props<any>, State> {

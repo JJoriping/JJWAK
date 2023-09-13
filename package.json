@@ -1,6 +1,6 @@
 {
   "name": "jjwak",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "author": "JJoriping",
   "description": "Integrated Web Application Development Kit",
   "license": "MIT",
@@ -23,6 +23,7 @@
     "readline-sync": "^1.4.9"
   },
   "devDependencies": {
-    "@tsconfig/node14": "^1.0.0"
+    "@tsconfig/node18": "^18.2.1",
+    "typescript": "^5.2.2"
   }
 }

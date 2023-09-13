@@ -1,10 +1,10 @@
-# JJWAK v1.9
+# JJWAK v1.9.3
 
 Cross-platform Integrated Web Application Development Kit
 
 ## Prerequisite
 
-- Node.js 16
+- Node.js 18
 - Yarn
 - Git
 
